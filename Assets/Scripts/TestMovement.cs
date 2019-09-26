@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class TestMovement : MonoBehaviour
 {
-    // Start is called before the first frame update
     [SerializeField]
     private float walkSpeed;
 
