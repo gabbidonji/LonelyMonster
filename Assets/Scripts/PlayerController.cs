@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
+    private float playerWorldRelationAngle = 0;
     private float speed = 5;
     // Start is called before the first frame update
     void Start()
@@ -17,7 +18,13 @@ public class PlayerController : MonoBehaviour
         float moveHorizontal = Input.GetAxis("Horizontal");
         float moveVertical = Input.GetAxis("Vertical");
 
+        transform.rotation = Quaternion.Euler(0,playerWorldRelationAngle,0);
+
         Vector3 movement = new Vector3(moveHorizontal, 0.0f, moveVertical);
-        GetComponent<Rigidbody>().velocity = movement * speed;
+        GetComponent<Rigidbody>().velocity = transform.TransformDirection(movement) * speed;
+    }
+
+    public void changeReferenceAngle(float angle){
+        playerWorldRelationAngle = angle%360;
     }
 }
