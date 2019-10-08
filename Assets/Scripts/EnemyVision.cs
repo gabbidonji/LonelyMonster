@@ -38,7 +38,8 @@ public class EnemyVision : MonoBehaviour
                     Debug.Log(angle);
                     if (angle < fieldOfView)
                     {
-                        player.GetComponent<DemoPlayerMovement>().Found();
+                        if(player.GetComponent<DemoPlayerMovement>() != null) player.GetComponent<DemoPlayerMovement>().Found();
+                        if(player.GetComponent<PlayerController>() != null) player.GetComponent<PlayerController>().Found();
                     }
                 }
             }

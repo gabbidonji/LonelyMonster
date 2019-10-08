@@ -5,8 +5,14 @@ using UnityEngine;
 public class PlayerController : MonoBehaviour
 {
     private float playerWorldRelationAngle = 0;
-    private float speed = 5;
+
+    [SerializeField]
+    private float speed;
     // Start is called before the first frame update
+
+    public Material foundTex;
+
+    private bool found = false;
     void Start()
     {
         
@@ -15,6 +21,8 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if(!found)
+        {
         float moveHorizontal = Input.GetAxis("Horizontal");
         float moveVertical = Input.GetAxis("Vertical");
 
@@ -22,9 +30,20 @@ public class PlayerController : MonoBehaviour
 
         Vector3 movement = new Vector3(moveHorizontal, 0.0f, moveVertical);
         GetComponent<Rigidbody>().velocity = transform.TransformDirection(movement) * speed;
+        } else {
+            GetComponent<Rigidbody>().velocity = new Vector3();
+        }
     }
 
-    public void changeReferenceAngle(float angle){
+    public void changeReferenceAngle(float angle)
+    {
         playerWorldRelationAngle = angle%360;
+    }
+
+    public void Found()
+    {
+        found = true;
+        GetComponent<BoxCollider>().enabled = false;
+        GetComponent<MeshRenderer>().material = foundTex;
     }
 }
