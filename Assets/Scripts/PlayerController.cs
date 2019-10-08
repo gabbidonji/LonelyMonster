@@ -21,17 +21,18 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(!found)
-        {
         float moveHorizontal = Input.GetAxis("Horizontal");
         float moveVertical = Input.GetAxis("Vertical");
+        if (!found)
+        {
+            transform.rotation = Quaternion.Euler(0,playerWorldRelationAngle,0);
 
-        transform.rotation = Quaternion.Euler(0,playerWorldRelationAngle,0);
-
-        Vector3 movement = new Vector3(moveHorizontal, 0.0f, moveVertical);
-        GetComponent<Rigidbody>().velocity = transform.TransformDirection(movement) * speed;
+            Vector3 movement = new Vector3(moveHorizontal, 0.0f, moveVertical);
+            GetComponent<Rigidbody>().velocity = transform.TransformDirection(movement) * speed;
         } else {
             GetComponent<Rigidbody>().velocity = new Vector3();
+            Vector3 movement = new Vector3(moveHorizontal, 0.0f, moveVertical);
+            transform.rotation = Quaternion.LookRotation(movement);
         }
     }
 
