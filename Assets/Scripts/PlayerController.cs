@@ -13,6 +13,15 @@ public class PlayerController : MonoBehaviour
     public Material foundTex;
 
     private bool found = false;
+
+    private bool attacking = false;
+
+    [SerializeField]
+    private float attackDuration;
+    private float attackTimer = 0;
+
+    [SerializeField]
+    GameObject attackHitbox;
     void Start()
     {
         
@@ -33,6 +42,21 @@ public class PlayerController : MonoBehaviour
             GetComponent<Rigidbody>().velocity = new Vector3();
             Vector3 movement = new Vector3(moveHorizontal, 0.0f, moveVertical);
             transform.rotation = Quaternion.LookRotation(movement);
+        }
+        if(Input.GetKeyDown("space") && !attacking)
+        {
+            attackHitbox.SetActive(true);
+            attacking = true;
+            attackTimer = attackDuration;
+        }
+        if(attacking)
+        {
+            attackTimer -= Time.deltaTime;
+            if(attackTimer < 0)
+            {
+                attacking = false;
+                attackHitbox.SetActive(false);
+            }
         }
     }
 

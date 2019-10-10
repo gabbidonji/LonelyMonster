@@ -35,7 +35,6 @@ public class EnemyVision : MonoBehaviour
                 if (hitObject.tag == "Player")
                 {
                     float angle = Mathf.Abs(Mathf.Atan2(playerPositionEnemyBasis.x, playerPositionEnemyBasis.z) * Mathf.Rad2Deg);
-                    Debug.Log(angle);
                     if (angle < fieldOfView)
                     {
                         if(player.GetComponent<DemoPlayerMovement>() != null) player.GetComponent<DemoPlayerMovement>().Found();
