@@ -104,7 +104,8 @@ GameObject:
   - component: {fileID: 7329047478384547056}
   - component: {fileID: 7329047478384547057}
   - component: {fileID: 7329047478384547061}
-  - component: {fileID: 1407692252}
+  - component: {fileID: 2882763833870447352}
+  - component: {fileID: 6422248141450894672}
   m_Layer: 0
   m_Name: EnemyWithLight
   m_TagString: Untagged
@@ -200,8 +201,32 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   player: {fileID: 0}
   visionDistance: 5
+  followingVisionDistance: 15
   fieldOfView: 45
---- !u!114 &1407692252
+  followingFieldOfView: 120
+--- !u!195 &2882763833870447352
+NavMeshAgent:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7329047478384547058}
+  m_Enabled: 1
+  m_AgentTypeID: 0
+  m_Radius: 0.5
+  m_Speed: 3.5
+  m_Acceleration: 8
+  avoidancePriority: 50
+  m_AngularSpeed: 120
+  m_StoppingDistance: 0
+  m_AutoTraverseOffMeshLink: 1
+  m_AutoBraking: 1
+  m_AutoRepath: 1
+  m_Height: 1
+  m_BaseOffset: 0.5
+  m_WalkableMask: 4294967295
+  m_ObstacleAvoidanceType: 4
+--- !u!114 &6422248141450894672
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -210,12 +235,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 7329047478384547058}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 724928fd36df5384288c95ee5701a5c4, type: 3}
+  m_Script: {fileID: 11500000, guid: b11d05f1410ca41abae17cf0010cf00c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  walkSpeed: 5
-  rotationSpeed: 60
-  verticalMovement: 1
-  minPosition: -18
-  maxPosition: 18
-  positiveMotion: 0
+  player: {fileID: 0}
+  positions: []
+  rotationSpeed: 200
+  movementSpeed: 7
