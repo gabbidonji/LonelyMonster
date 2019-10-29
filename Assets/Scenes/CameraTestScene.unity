@@ -519,7 +519,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 86e164c8af962a94986df1f8d6110340, type: 2}
+  - {fileID: 2100000, guid: 69f55ff6997f5497b83d4af0e33349de, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -2231,6 +2231,11 @@ PrefabInstance:
       propertyPath: m_TagString
       value: Enemy
       objectReference: {fileID: 0}
+    - target: {fileID: 7329047478384547058, guid: f0f1919471aca41018e9d09bae750efe,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 7329047478384547062, guid: f0f1919471aca41018e9d09bae750efe,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -3493,15 +3498,15 @@ PrefabInstance:
       propertyPath: m_Shadows.m_Type
       value: 2
       objectReference: {fileID: 0}
-    - target: {fileID: 7329047477307702199, guid: f0f1919471aca41018e9d09bae750efe,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 7329047478384547056, guid: f0f1919471aca41018e9d09bae750efe,
         type: 3}
       propertyPath: m_Enabled
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7329047477307702199, guid: f0f1919471aca41018e9d09bae750efe,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f0f1919471aca41018e9d09bae750efe, type: 3}
