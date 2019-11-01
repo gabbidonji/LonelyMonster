@@ -8,6 +8,7 @@ public class Enemy1AI : MonoBehaviour
 
     public GameObject player;
     private Transform player_tr;
+    private PlayerController player_ctr;
     private Vector3 lastSeenPlayerPos;
 
     private EnemyVision vision;
@@ -26,27 +27,42 @@ public class Enemy1AI : MonoBehaviour
     private bool checkedLeft;
     private bool checkedRight;
 
+    public float attackTriggerDist;
+    public float attackPredelay;
+    public float attackLength;
+    public float attackPostdelay;
+    private float attackTimer;
+    public GameObject attackHitbox;
+
+    private AttackState attackState;
+
+    enum AttackState {
+        NOT_ATTACKING, PREDELAY, ATTACKING, POSTDELAY
+    }
+
     enum EnemyState {
-        PATROL, PURSUE, CHECK, RETURN 
+        PATROL, PURSUE, CHECK
     }
 
     // Start is called before the first frame update
     void Start()
     {
+        attackState = AttackState.NOT_ATTACKING;
         state = EnemyState.PATROL;
         nav = GetComponent<NavMeshAgent>();
         nav.destination = positions[0];
         vision = GetComponent<EnemyVision>();
         player_tr = player.transform;
+        player_ctr = player.GetComponent<PlayerController>();
         targetPosIndex = 0;
         checkedRight = false;
         checkedLeft = false;
         checking = false;
     }
 
-    // Update is called once per frame
     void Update()
     {
+        //Debug.Log(attackState);
         switch(state){
             case EnemyState.PATROL:
                 /*
@@ -62,7 +78,7 @@ public class Enemy1AI : MonoBehaviour
                     }
                 }
                 */
-                if(vision.SeesPlayer()){
+                if(vision.SeesPlayer() && !player_ctr.IsFound()){
                     vision.FollowingPlayer();
                     state = EnemyState.PURSUE;
                 } else {
@@ -73,16 +89,57 @@ public class Enemy1AI : MonoBehaviour
                 }
                 break;
             case EnemyState.PURSUE:
-                if(vision.SeesPlayer()){
-                    nav.destination = player_tr.position;
-                    lastSeenPlayerPos = player_tr.position;
-                } else {
-                    nav.destination = lastSeenPlayerPos;
-                    if(nav.remainingDistance < 0.001) {
-                        nav.enabled = false;
-                        state = EnemyState.CHECK;
-                        checkCenterAngle = transform.rotation.eulerAngles;
-                    }
+                switch(attackState){
+                    case AttackState.NOT_ATTACKING:
+                        if(vision.SeesPlayer()){
+                            nav.destination = player_tr.position;
+                            lastSeenPlayerPos = player_tr.position;
+                            if(nav.remainingDistance < attackTriggerDist){
+                                nav.enabled = false;
+                                attackTimer = attackPredelay;
+                                attackState = AttackState.PREDELAY;
+                            }
+                        } else {
+                            nav.destination = lastSeenPlayerPos;
+                            if(nav.remainingDistance < 0.001) {
+                                nav.enabled = false;
+                                state = EnemyState.CHECK;
+                                checkCenterAngle = transform.rotation.eulerAngles;
+                            }
+                        }
+                        break;
+                    case AttackState.PREDELAY:
+                        if(attackTimer < 0){
+                            attackTimer = attackLength;
+                            attackState = AttackState.ATTACKING;
+                            attackHitbox.SetActive(true);
+                        } else {
+                            attackTimer -= Time.deltaTime;
+                        }
+                        break;
+                    case AttackState.ATTACKING:
+                        if(attackTimer < 0){
+                            attackHitbox.SetActive(false);
+                            attackTimer = attackPostdelay;
+                            attackState = AttackState.POSTDELAY;
+                        } else {
+                            Debug.Log(attackTimer);
+                            attackTimer -= Time.deltaTime;
+                        }
+                        break;
+                    case AttackState.POSTDELAY:
+                        if(attackTimer < 0){
+                            nav.enabled = true;
+                            attackState = AttackState.NOT_ATTACKING;
+                            if(player_ctr.IsFound()){
+                                targetPosIndex = FindClosestPathPoint();
+                                state = EnemyState.PATROL;
+                            }
+                        } else {
+                            attackTimer -= Time.deltaTime;
+                        }
+                        break;
+
                 }
                 break;
             case EnemyState.CHECK:
@@ -105,8 +162,6 @@ public class Enemy1AI : MonoBehaviour
                     vision.NotFollowingPlayer();
                     state = EnemyState.PATROL;
                 }
-                break;
-            case EnemyState.RETURN:
                 break;
         }
     }

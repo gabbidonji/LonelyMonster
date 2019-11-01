@@ -6,6 +6,8 @@ public class PlayerController : MonoBehaviour
 {
     private float playerWorldRelationAngle = 0;
 
+    public GameObject mesh;
+
     [SerializeField]
     private float speed;
     // Start is called before the first frame update
@@ -77,10 +79,14 @@ public class PlayerController : MonoBehaviour
         playerWorldRelationAngle = angle%360;
     }
 
-    public void Found()
+    public void Hit()
     {
         found = true;
         GetComponent<BoxCollider>().enabled = false;
-        GetComponent<MeshRenderer>().material = foundTex;
+        mesh.GetComponent<MeshRenderer>().material = foundTex;
+    }
+
+    public bool IsFound(){
+        return found;
     }
 }
