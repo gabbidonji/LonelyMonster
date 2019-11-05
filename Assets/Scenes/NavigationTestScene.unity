@@ -1044,6 +1044,11 @@ PrefabInstance:
       propertyPath: m_RootOrder
       value: 3
       objectReference: {fileID: 0}
+    - target: {fileID: 2882763833870447352, guid: f0f1919471aca41018e9d09bae750efe,
+        type: 3}
+      propertyPath: m_BaseOffset
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f0f1919471aca41018e9d09bae750efe, type: 3}
 --- !u!1001 &435033245
@@ -3570,6 +3575,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ebc55c721d51e5d47a7c9a4f8d450981, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  hitInvincibilityTime: 0.3
+  hitKnockback: 1
   mesh: {fileID: 1411931040}
   speed: 5
   foundTex: {fileID: 2100000, guid: 046ed279ee4f64af38274c9d7302c932, type: 2}
