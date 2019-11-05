@@ -4,10 +4,11 @@ using UnityEngine;
 
 public class EnemyAttackController : MonoBehaviour
 {
+    Transform parent_tr;
     // Start is called before the first frame update
     void Start()
     {
-        
+        parent_tr = transform.parent.transform;
     }
 
     // Update is called once per frame
@@ -20,7 +21,7 @@ public class EnemyAttackController : MonoBehaviour
     {
         if(c.gameObject.tag == "Player")
         {
-            c.gameObject.GetComponent<PlayerController>().Hit();
+            c.gameObject.GetComponent<PlayerController>().Hit(parent_tr.position);
         }
     }
 }

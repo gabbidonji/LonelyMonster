@@ -6,7 +6,12 @@ public class PlayerController : MonoBehaviour
 {
     private float playerWorldRelationAngle = 0;
 
+    public float hitInvincibilityTime;
+    private float hitInvincibilityTimer;
+    public float hitKnockback;
     public GameObject mesh;
+
+    private Rigidbody rb;
 
     [SerializeField]
     private float speed;
@@ -36,6 +41,8 @@ public class PlayerController : MonoBehaviour
 
     void Start()
     {
+        hitInvincibilityTimer = -1;
+        rb = GetComponent<Rigidbody>();
     }
 
     // Update is called once per frame
@@ -43,13 +50,18 @@ public class PlayerController : MonoBehaviour
     {
          float moveHorizontal = Input.GetAxis("Horizontal");
          float moveVertical = Input.GetAxis("Vertical");
-         if (!found)
-         {
-             Vector3 movement = new Vector3(moveVertical, 0.0f, -moveHorizontal);
-             GetComponent<Rigidbody>().velocity = transform.TransformDirection(movement) * speed;
+         Debug.Log(hitInvincibilityTimer);
+         if(hitInvincibilityTimer > 0) {
+             hitInvincibilityTimer-=Time.deltaTime;
          } else {
-             GetComponent<Rigidbody>().velocity = new Vector3();
-             Vector3 movement = new Vector3(moveVertical, 0.0f, -moveHorizontal);
+            if (!found)
+            {
+                Vector3 movement = new Vector3(moveVertical, 0.0f, -moveHorizontal);
+                GetComponent<Rigidbody>().velocity = transform.TransformDirection(movement) * speed;
+            } else {
+                GetComponent<Rigidbody>().velocity = new Vector3();
+                Vector3 movement = new Vector3(moveVertical, 0.0f, -moveHorizontal);
+            }
          }
 
         if (axes == RotationAxis.MOUSEX)
@@ -72,6 +84,7 @@ public class PlayerController : MonoBehaviour
                 attackHitbox.SetActive(false);
             }
         }
+        
     }
 
     public void changeReferenceAngle(float angle)
@@ -79,14 +92,20 @@ public class PlayerController : MonoBehaviour
         playerWorldRelationAngle = angle%360;
     }
 
-    public void Hit()
+    public void Hit(Vector3 enemyPos)
     {
-        found = true;
-        GetComponent<BoxCollider>().enabled = false;
-        mesh.GetComponent<MeshRenderer>().material = foundTex;
+        if(hitInvincibilityTimer < 0){
+            //found = true;
+            //GetComponent<BoxCollider>().enabled = false;
+            //mesh.GetComponent<MeshRenderer>().material = foundTex;
+            rb.AddForce(hitKnockback*(transform.position-enemyPos).normalized);
+            hitInvincibilityTimer = hitInvincibilityTime;
+        }
     }
 
     public bool IsFound(){
         return found;
     }
+
+
 }

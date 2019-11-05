@@ -123,7 +123,6 @@ public class Enemy1AI : MonoBehaviour
                             attackTimer = attackPostdelay;
                             attackState = AttackState.POSTDELAY;
                         } else {
-                            Debug.Log(attackTimer);
                             attackTimer -= Time.deltaTime;
                         }
                         break;
@@ -143,7 +142,6 @@ public class Enemy1AI : MonoBehaviour
                 }
                 break;
             case EnemyState.CHECK:
-                Debug.Log(checkCenterAngle);
                 if(!checkedLeft){
                     Vector3 leftRotation = checkCenterAngle;
                     leftRotation.y = leftRotation.y - 85;
