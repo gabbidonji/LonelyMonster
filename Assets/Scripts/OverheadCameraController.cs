@@ -11,7 +11,7 @@ public class OverheadCameraController : MonoBehaviour
     // Use this for initialization
     void Start()
     {
-        offset = new Vector3(-0.9f, 1, 0); //(transform.position - player.transform.position);
+        offset = new Vector3(-1.5f, 1.1f, 0); //(transform.position - player.transform.position);
     }
 
     // LateUpdate is called after Update each frame
