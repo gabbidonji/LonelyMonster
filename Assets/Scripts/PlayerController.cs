@@ -50,7 +50,6 @@ public class PlayerController : MonoBehaviour
     {
          float moveHorizontal = Input.GetAxis("Horizontal");
          float moveVertical = Input.GetAxis("Vertical");
-         Debug.Log(hitInvincibilityTimer);
          if(hitInvincibilityTimer > 0) {
              hitInvincibilityTimer-=Time.deltaTime;
          } else {
@@ -95,10 +94,12 @@ public class PlayerController : MonoBehaviour
     public void Hit(Vector3 enemyPos)
     {
         if(hitInvincibilityTimer < 0){
-            //found = true;
-            //GetComponent<BoxCollider>().enabled = false;
-            //mesh.GetComponent<MeshRenderer>().material = foundTex;
-            rb.AddForce(hitKnockback*(transform.position-enemyPos).normalized);
+            found = true;
+            GetComponent<BoxCollider>().enabled = false;
+            mesh.GetComponent<MeshRenderer>().material = foundTex;
+            Vector3 forceDir = (transform.position-enemyPos);
+            forceDir[1] = 0;
+            rb.AddForce(hitKnockback*forceDir.normalized);
             hitInvincibilityTimer = hitInvincibilityTime;
         }
     }

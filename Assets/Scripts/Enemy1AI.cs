@@ -65,6 +65,7 @@ public class Enemy1AI : MonoBehaviour
         //Debug.Log(attackState);
         switch(state){
             case EnemyState.PATROL:
+                vision.NotFollowingPlayer();
                 /*
                 if(vision.SeesPlayer()){
                     state = EnemyState.PURSUE;
