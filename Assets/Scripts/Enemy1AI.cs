@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
-public class Enemy1AI : MonoBehaviour
+public class Enemy1AI : MonoBehaviour, EnemyAI
 {
 
     public GameObject player;
@@ -41,7 +41,7 @@ public class Enemy1AI : MonoBehaviour
     }
 
     enum EnemyState {
-        PATROL, PURSUE, CHECK
+        PATROL, PURSUE, CHECK, IMMOBILE
     }
 
     // Start is called before the first frame update
@@ -66,19 +66,6 @@ public class Enemy1AI : MonoBehaviour
         switch(state){
             case EnemyState.PATROL:
                 vision.NotFollowingPlayer();
-                /*
-                if(vision.SeesPlayer()){
-                    state = EnemyState.PURSUE;
-                } else {
-                    if(FaceDirection(positions[targetPosIndex])){
-                        //Debug.Log("here1");
-                        if(MoveTowards(positions[targetPosIndex])){
-                            //Debug.Log("here2");
-                            targetPosIndex = (targetPosIndex + 1)%positions.Count;
-                        }
-                    }
-                }
-                */
                 if(vision.SeesPlayer() && !player_ctr.IsFound()){
                     vision.FollowingPlayer();
                     state = EnemyState.PURSUE;
@@ -162,6 +149,8 @@ public class Enemy1AI : MonoBehaviour
                     state = EnemyState.PATROL;
                 }
                 break;
+            case EnemyState.IMMOBILE:
+                break;
         }
     }
 
@@ -211,5 +200,23 @@ public class Enemy1AI : MonoBehaviour
             transform.Translate(transform.InverseTransformDirection(translation));
             return false;
         }
+    }
+
+    public void startFeeding(){
+        if(state != EnemyState.PURSUE){
+            nav.enabled = false;
+            state = EnemyState.IMMOBILE;
+        }
+    }
+
+    public void stopFeeding(){
+        if(state == EnemyState.IMMOBILE){
+            nav.enabled = true;
+            state = EnemyState.PURSUE;
+        }
+    }
+
+    public void destroyEnemy(){
+        Destroy(this.gameObject);
     }
 }
