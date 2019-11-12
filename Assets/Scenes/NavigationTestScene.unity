@@ -577,8 +577,8 @@ GameObject:
   - component: {fileID: 148916059}
   - component: {fileID: 148916058}
   m_Layer: 0
-  m_Name: House (11)
-  m_TagString: Untagged
+  m_Name: Back Wall
+  m_TagString: Wall
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 8
@@ -3481,7 +3481,7 @@ GameObject:
   - component: {fileID: 1181958859}
   - component: {fileID: 1181958858}
   m_Layer: 0
-  m_Name: Floor
+  m_Name: Setting
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3594,7 +3594,7 @@ GameObject:
   - component: {fileID: 1241352641}
   - component: {fileID: 1241352640}
   m_Layer: 0
-  m_Name: House (8)
+  m_Name: Left Wall
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4468,6 +4468,7 @@ MonoBehaviour:
   attackDuration: 0.2
   attackHitbox: {fileID: 2063365669}
   feedHitbox: {fileID: 1659500034}
+  key: {fileID: 621640536}
   axes: 1
   HorizontalSpeed: 10
   rotationX: 0
@@ -4484,7 +4485,7 @@ GameObject:
   - component: {fileID: 1514830418}
   - component: {fileID: 1514830417}
   m_Layer: 0
-  m_Name: House (9)
+  m_Name: Right Wall
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -6117,7 +6118,7 @@ GameObject:
   - component: {fileID: 2145957768}
   - component: {fileID: 2145957767}
   m_Layer: 0
-  m_Name: House (10)
+  m_Name: Front Wall
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

@@ -34,6 +34,8 @@ public class PlayerController : MonoBehaviour
 
     public GameObject feedHitbox;
 
+    public KeyController key;
+
     private enum PlayerState{
         MOVING, HIT, FEEDING, DEAD
     }
@@ -155,6 +157,20 @@ public class PlayerController : MonoBehaviour
             feedingTimer = feedingTime;
             enemyAI = AI;
             enemyAI.startFeeding();
+        }
+    }
+    void OnCollisionEnter(Collision collision)
+    {
+        if (collision.gameObject.tag == "Wall")
+        {
+            if (key.isActiveAndEnabled)
+            {
+                Debug.Log("YOU WIN");
+            }
+            else
+            {
+                Debug.Log("Find the key!");
+            }
         }
     }
 }
