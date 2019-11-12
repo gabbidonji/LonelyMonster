@@ -133,12 +133,12 @@ public class Enemy1AI : MonoBehaviour, EnemyAI
                 if(!checkedLeft){
                     Vector3 leftRotation = checkCenterAngle;
                     leftRotation.y = leftRotation.y - 85;
-                    Debug.Log("Left: " + leftRotation);
+                    //Debug.Log("Left: " + leftRotation);
                     checkedLeft = RotateTowards(Mathf.Deg2Rad*leftRotation);
                 } else if (!checkedRight){
                     Vector3 rightRotation = checkCenterAngle;
                     rightRotation.y = rightRotation.y + 85;
-                    Debug.Log("Right: " + rightRotation);
+                    //Debug.Log("Right: " + rightRotation);
                     checkedRight = RotateTowards(Mathf.Deg2Rad*rightRotation);
                 } else {
                     checkedLeft = false;
