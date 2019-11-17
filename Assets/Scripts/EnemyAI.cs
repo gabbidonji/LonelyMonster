@@ -5,10 +5,12 @@ using UnityEngine.AI;
 
 public interface EnemyAI
 {
-    void startFeeding();
+    void StartFeeding();
 
-    void stopFeeding();
+    void StopFeeding();
 
-    void destroyEnemy();
+    void DestroyEnemy();
+
+    bool SeesPlayer();
 
 }

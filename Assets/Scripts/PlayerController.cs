@@ -77,13 +77,13 @@ public class PlayerController : MonoBehaviour
                 GetComponent<Rigidbody>().velocity = transform.TransformDirection(movement) * speed;
                 switch(aState){
                     case AttackState.NOTATTACKING:
-                        if(Input.GetKeyDown("space"))
+                        if(Input.GetKeyDown(KeyCode.Mouse0))
                         {
                             attackHitbox.SetActive(true);
                             aState = AttackState.ATTACKING;
                             attackTimer = attackDuration;
                         }
-                        if(Input.GetKeyDown(KeyCode.LeftShift)){
+                        if(Input.GetKeyDown(KeyCode.Mouse1)){
                             feedHitbox.SetActive(true);
                             aState = AttackState.ATTACKING;
                             attackTimer = attackDuration;
@@ -107,9 +107,10 @@ public class PlayerController : MonoBehaviour
             feedingTimer -= Time.deltaTime;
             if(feedingTimer < Time.deltaTime){
                 state = PlayerState.MOVING;
-                enemyAI.destroyEnemy();
+                enemyAI.DestroyEnemy();
             }
-            if(Input.GetKeyUp(KeyCode.LeftShift)){
+            if(Input.GetKeyDown(KeyCode.Mouse1)){
+                enemyAI.StopFeeding();
                 state = PlayerState.MOVING;
             }
             break;
@@ -117,6 +118,7 @@ public class PlayerController : MonoBehaviour
             if(aState == AttackState.ATTACKING){
                 aState = AttackState.NOTATTACKING;
                 attackHitbox.SetActive(false);
+                feedHitbox.SetActive(false);
             }
             hitInvincibilityTimer-=Time.deltaTime;
             if(hitInvincibilityTimer < 0){
@@ -135,7 +137,7 @@ public class PlayerController : MonoBehaviour
     {
         if(state != PlayerState.HIT){
             if(state == PlayerState.FEEDING){
-                enemyAI.stopFeeding();
+                enemyAI.StopFeeding();
             }
             state = PlayerState.HIT;
             GetComponent<BoxCollider>().enabled = false;
@@ -152,11 +154,11 @@ public class PlayerController : MonoBehaviour
     }
 
     public void StartFeeding(EnemyAI AI){
-        if(state != PlayerState.FEEDING){
+        if((state != PlayerState.FEEDING) && !(AI.SeesPlayer())){
             state = PlayerState.FEEDING;
             feedingTimer = feedingTime;
             enemyAI = AI;
-            enemyAI.startFeeding();
+            enemyAI.StartFeeding();
         }
     }
     void OnCollisionEnter(Collision collision)

@@ -202,21 +202,25 @@ public class Enemy1AI : MonoBehaviour, EnemyAI
         }
     }
 
-    public void startFeeding(){
+    public void StartFeeding(){
         if(state != EnemyState.PURSUE){
             nav.enabled = false;
             state = EnemyState.IMMOBILE;
         }
     }
 
-    public void stopFeeding(){
+    public void StopFeeding(){
         if(state == EnemyState.IMMOBILE){
             nav.enabled = true;
             state = EnemyState.PURSUE;
         }
     }
 
-    public void destroyEnemy(){
+    public void DestroyEnemy(){
         Destroy(this.gameObject);
+    }
+
+    public bool SeesPlayer(){
+        return vision.SeesPlayer();
     }
 }
