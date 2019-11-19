@@ -54,6 +54,7 @@ public class PlayerController : MonoBehaviour
     public RotationAxis axes = RotationAxis.MOUSEX;
     public float HorizontalSpeed = 100.0f;
     public float rotationX = 0;
+    private AnimationController anim;
 
     private float oldPositionHoriz;
     private float oldPositionVert;
@@ -74,12 +75,12 @@ public class PlayerController : MonoBehaviour
         oldPositionHoriz = Input.GetAxis("Horizontal");
         oldPositionVert = Input.GetAxis("Vertical");
         InvokeRepeating("hunger", 2.0f, 1f);
+        anim = FindObjectOfType<AnimationController>();
     }
 
     // Update is called once per frame
     void Update()
     {
-        FindObjectOfType<AnimationController>().idle();
         float moveHorizontal = Input.GetAxis("Horizontal");
         float moveVertical = Input.GetAxis("Vertical");
         if (axes == RotationAxis.MOUSEX)
@@ -88,7 +89,10 @@ public class PlayerController : MonoBehaviour
         }
         if (oldPositionHoriz != moveHorizontal || oldPositionVert != moveVertical) // walking
         {
-            FindObjectOfType<AnimationController>().walk();
+            anim.walk();
+        } else
+        {
+            anim.idle();
         }
         switch (state){
             case PlayerState.MOVING:
@@ -98,13 +102,13 @@ public class PlayerController : MonoBehaviour
                     case AttackState.NOTATTACKING:
                         if (Input.GetKeyDown(KeyCode.Mouse0)) // left click (attack)
                         {
-                            FindObjectOfType<AnimationController>().attack();
+                            anim.attack();
                             attackHitbox.SetActive(true);
                             aState = AttackState.ATTACKING;
                             attackTimer = attackDuration;
                         }
                         if(Input.GetKeyDown(KeyCode.Mouse1)){ // right click (feed)
-                            FindObjectOfType<AnimationController>().feed();
+                            anim.feed();
                             currentFeed = 25;
                             feedHitbox.SetActive(true);
                             aState = AttackState.ATTACKING;
@@ -123,7 +127,7 @@ public class PlayerController : MonoBehaviour
                 }
             break;
         case PlayerState.DEAD:
-            FindObjectOfType<AnimationController>().die();
+            anim.die();
             GetComponent<Rigidbody>().velocity = new Vector3();
             break;
         case PlayerState.FEEDING:
@@ -138,15 +142,21 @@ public class PlayerController : MonoBehaviour
             }
             break;
         case PlayerState.HIT:
-            FindObjectOfType<AnimationController>().takeHit();
+            anim.takeHit();
             if (aState == AttackState.ATTACKING){
                 aState = AttackState.NOTATTACKING;
                 attackHitbox.SetActive(false);
                 feedHitbox.SetActive(false);
             }
             hitInvincibilityTimer-=Time.deltaTime;
-            if(hitInvincibilityTimer < 0){ // currentHealth == 0
-                state = PlayerState.DEAD;
+            if(hitInvincibilityTimer < 0){ // 
+                    if (currentHealth <= 0)
+                    {
+                        state = PlayerState.DEAD;
+                    } else
+                    {
+                        state = PlayerState.MOVING;
+                    }
             }
             break;
          }
