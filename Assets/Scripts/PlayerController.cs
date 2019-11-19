@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class PlayerController : MonoBehaviour
 {
@@ -56,6 +57,12 @@ public class PlayerController : MonoBehaviour
     private float oldPositionHoriz;
     private float oldPositionVert;
 
+    public Slider healthSlider;
+    private float currentHealth = 5f;
+
+    public Slider feedSlider;
+    private float currentFeed = 20f;
+
     void Start()
     {
         feedingTimer = -1;
@@ -65,6 +72,7 @@ public class PlayerController : MonoBehaviour
         rb = GetComponent<Rigidbody>();
         oldPositionHoriz = Input.GetAxis("Horizontal");
         oldPositionVert = Input.GetAxis("Vertical");
+        InvokeRepeating("hunger", 2.0f, 1f);
     }
 
     // Update is called once per frame
@@ -96,6 +104,7 @@ public class PlayerController : MonoBehaviour
                         }
                         if(Input.GetKeyDown(KeyCode.Mouse1)){ // right click (feed)
                             FindObjectOfType<AnimationController>().feed();
+                            currentFeed = 25;
                             feedHitbox.SetActive(true);
                             aState = AttackState.ATTACKING;
                             attackTimer = attackDuration;
@@ -113,10 +122,10 @@ public class PlayerController : MonoBehaviour
                 }
             break;
         case PlayerState.DEAD:
+            FindObjectOfType<AnimationController>().die();
             GetComponent<Rigidbody>().velocity = new Vector3();
             break;
         case PlayerState.FEEDING:
-                FindObjectOfType<AnimationController>().feed();
                 feedingTimer -= Time.deltaTime;
             if(feedingTimer < Time.deltaTime){
                 state = PlayerState.MOVING;
@@ -135,13 +144,14 @@ public class PlayerController : MonoBehaviour
                 feedHitbox.SetActive(false);
             }
             hitInvincibilityTimer-=Time.deltaTime;
-            if(hitInvincibilityTimer < 0){
+            if(hitInvincibilityTimer < 0){ // currentHealth == 0
                 state = PlayerState.DEAD;
             }
             break;
          }
     }
-
+    
+    
     public void changeReferenceAngle(float angle)
     {
         playerWorldRelationAngle = angle%360;
@@ -154,6 +164,9 @@ public class PlayerController : MonoBehaviour
                 enemyAI.StopFeeding();
             }
             state = PlayerState.HIT;
+            healthSlider.value = currentHealth - 1;
+            currentHealth = healthSlider.value;
+
             GetComponent<BoxCollider>().enabled = false;
             mesh.GetComponent<MeshRenderer>().material = foundTex;
             Vector3 forceDir = (transform.position-enemyPos);
@@ -175,6 +188,17 @@ public class PlayerController : MonoBehaviour
             enemyAI.StartFeeding();
         }
     }
+
+    void hunger()
+    {
+        currentFeed -= 1;
+        feedSlider.value = currentFeed;
+        if (currentFeed == 0)
+        {
+            state = PlayerState.DEAD;
+        }
+    }
+
     void OnCollisionEnter(Collision collision)
     {
         if (collision.gameObject.tag == "Wall")
