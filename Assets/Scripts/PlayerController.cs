@@ -53,6 +53,9 @@ public class PlayerController : MonoBehaviour
     public float HorizontalSpeed = 100.0f;
     public float rotationX = 0;
 
+    private float oldPositionHoriz;
+    private float oldPositionVert;
+
     void Start()
     {
         feedingTimer = -1;
@@ -60,24 +63,32 @@ public class PlayerController : MonoBehaviour
         aState = AttackState.NOTATTACKING;
         hitInvincibilityTimer = -1;
         rb = GetComponent<Rigidbody>();
+        oldPositionHoriz = Input.GetAxis("Horizontal");
+        oldPositionVert = Input.GetAxis("Vertical");
     }
 
     // Update is called once per frame
     void Update()
     {
-         float moveHorizontal = Input.GetAxis("Horizontal");
-         float moveVertical = Input.GetAxis("Vertical");
-         if (axes == RotationAxis.MOUSEX)
+        FindObjectOfType<AnimationController>().idle();
+        float moveHorizontal = Input.GetAxis("Horizontal");
+        float moveVertical = Input.GetAxis("Vertical");
+        if (axes == RotationAxis.MOUSEX)
         {
             transform.Rotate(0, Input.GetAxis("Mouse X") * HorizontalSpeed, 0);
         }
-         switch(state){
+        if (oldPositionHoriz != moveHorizontal || oldPositionVert != moveVertical) // walking
+        {
+            Debug.Log("walking");
+            FindObjectOfType<AnimationController>().walk();
+        }
+        switch (state){
             case PlayerState.MOVING:
                 Vector3 movement = new Vector3(moveVertical, 0.0f, -moveHorizontal);
                 GetComponent<Rigidbody>().velocity = transform.TransformDirection(movement) * speed;
                 switch(aState){
                     case AttackState.NOTATTACKING:
-                        if(Input.GetKeyDown(KeyCode.Mouse0))
+                        if (Input.GetKeyDown(KeyCode.Mouse0))
                         {
                             attackHitbox.SetActive(true);
                             aState = AttackState.ATTACKING;
@@ -90,6 +101,7 @@ public class PlayerController : MonoBehaviour
                         }
                         break;
                     case AttackState.ATTACKING:
+                        FindObjectOfType<AnimationController>().attack();
                         attackTimer -= Time.deltaTime;
                         if(attackTimer < 0)
                         {
@@ -104,7 +116,8 @@ public class PlayerController : MonoBehaviour
             GetComponent<Rigidbody>().velocity = new Vector3();
             break;
         case PlayerState.FEEDING:
-            feedingTimer -= Time.deltaTime;
+                FindObjectOfType<AnimationController>().feed();
+                feedingTimer -= Time.deltaTime;
             if(feedingTimer < Time.deltaTime){
                 state = PlayerState.MOVING;
                 enemyAI.DestroyEnemy();
