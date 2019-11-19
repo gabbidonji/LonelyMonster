@@ -36,6 +36,7 @@ public class PlayerController : MonoBehaviour
     public GameObject feedHitbox;
 
     public KeyController key;
+    public Text dialogue;
 
     private enum PlayerState{
         MOVING, HIT, FEEDING, DEAD
@@ -205,11 +206,11 @@ public class PlayerController : MonoBehaviour
         {
             if (key.isActiveAndEnabled)
             {
-                Debug.Log("YOU WIN");
+                dialogue.text = "You unlocked the gate";
             }
             else
             {
-                Debug.Log("Find the key!");
+                dialogue.text = "Find the key!";
             }
         }
     }
