@@ -206,7 +206,7 @@ public class PlayerController : MonoBehaviour
         {
             if (key.isActiveAndEnabled)
             {
-                dialogue.text = "You unlocked the gate";
+                dialogue.text = "The gate is unlocked";
             }
             else
             {
