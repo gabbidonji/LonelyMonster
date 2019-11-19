@@ -79,7 +79,6 @@ public class PlayerController : MonoBehaviour
         }
         if (oldPositionHoriz != moveHorizontal || oldPositionVert != moveVertical) // walking
         {
-            Debug.Log("walking");
             FindObjectOfType<AnimationController>().walk();
         }
         switch (state){
@@ -88,20 +87,21 @@ public class PlayerController : MonoBehaviour
                 GetComponent<Rigidbody>().velocity = transform.TransformDirection(movement) * speed;
                 switch(aState){
                     case AttackState.NOTATTACKING:
-                        if (Input.GetKeyDown(KeyCode.Mouse0))
+                        if (Input.GetKeyDown(KeyCode.Mouse0)) // left click (attack)
                         {
+                            FindObjectOfType<AnimationController>().attack();
                             attackHitbox.SetActive(true);
                             aState = AttackState.ATTACKING;
                             attackTimer = attackDuration;
                         }
-                        if(Input.GetKeyDown(KeyCode.Mouse1)){
+                        if(Input.GetKeyDown(KeyCode.Mouse1)){ // right click (feed)
+                            FindObjectOfType<AnimationController>().feed();
                             feedHitbox.SetActive(true);
                             aState = AttackState.ATTACKING;
                             attackTimer = attackDuration;
                         }
                         break;
                     case AttackState.ATTACKING:
-                        FindObjectOfType<AnimationController>().attack();
                         attackTimer -= Time.deltaTime;
                         if(attackTimer < 0)
                         {
@@ -128,7 +128,8 @@ public class PlayerController : MonoBehaviour
             }
             break;
         case PlayerState.HIT:
-            if(aState == AttackState.ATTACKING){
+            FindObjectOfType<AnimationController>().takeHit();
+            if (aState == AttackState.ATTACKING){
                 aState = AttackState.NOTATTACKING;
                 attackHitbox.SetActive(false);
                 feedHitbox.SetActive(false);
@@ -148,7 +149,7 @@ public class PlayerController : MonoBehaviour
 
     public void Hit(Vector3 enemyPos)
     {
-        if(state != PlayerState.HIT){
+        if (state != PlayerState.HIT){
             if(state == PlayerState.FEEDING){
                 enemyAI.StopFeeding();
             }

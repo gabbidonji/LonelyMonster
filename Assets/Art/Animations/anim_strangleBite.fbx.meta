@@ -38,8 +38,8 @@ ModelImporter:
       name: feed_vamp
       takeName: mixamo.com
       internalID: 0
-      firstFrame: 0
-      lastFrame: 263
+      firstFrame: 137
+      lastFrame: 185
       wrapMode: 0
       orientationOffsetY: 0
       level: 0
