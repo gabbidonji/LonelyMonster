@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class PlayerController : MonoBehaviour
 {
@@ -35,6 +36,7 @@ public class PlayerController : MonoBehaviour
     public GameObject feedHitbox;
 
     public KeyController key;
+    public Text dialogue;
 
     private enum PlayerState{
         MOVING, HIT, FEEDING, DEAD
@@ -52,6 +54,16 @@ public class PlayerController : MonoBehaviour
     public RotationAxis axes = RotationAxis.MOUSEX;
     public float HorizontalSpeed = 100.0f;
     public float rotationX = 0;
+    private AnimationController anim;
+
+    private float oldPositionHoriz;
+    private float oldPositionVert;
+
+    public Slider healthSlider;
+    private float currentHealth = 5f;
+
+    public Slider feedSlider;
+    private float currentFeed = 20f;
 
     void Start()
     {
@@ -60,30 +72,44 @@ public class PlayerController : MonoBehaviour
         aState = AttackState.NOTATTACKING;
         hitInvincibilityTimer = -1;
         rb = GetComponent<Rigidbody>();
+        oldPositionHoriz = Input.GetAxis("Horizontal");
+        oldPositionVert = Input.GetAxis("Vertical");
+        InvokeRepeating("hunger", 2.0f, 1f);
+        anim = FindObjectOfType<AnimationController>();
     }
 
     // Update is called once per frame
     void Update()
     {
-         float moveHorizontal = Input.GetAxis("Horizontal");
-         float moveVertical = Input.GetAxis("Vertical");
-         if (axes == RotationAxis.MOUSEX)
+        float moveHorizontal = Input.GetAxis("Horizontal");
+        float moveVertical = Input.GetAxis("Vertical");
+        if (axes == RotationAxis.MOUSEX)
         {
             transform.Rotate(0, Input.GetAxis("Mouse X") * HorizontalSpeed, 0);
         }
-         switch(state){
+        if (oldPositionHoriz != moveHorizontal || oldPositionVert != moveVertical) // walking
+        {
+            anim.walk();
+        } else
+        {
+            anim.idle();
+        }
+        switch (state){
             case PlayerState.MOVING:
                 Vector3 movement = new Vector3(moveVertical, 0.0f, -moveHorizontal);
                 GetComponent<Rigidbody>().velocity = transform.TransformDirection(movement) * speed;
                 switch(aState){
                     case AttackState.NOTATTACKING:
-                        if(Input.GetKeyDown(KeyCode.Mouse0))
+                        if (Input.GetKeyDown(KeyCode.Mouse0)) // left click (attack)
                         {
+                            anim.attack();
                             attackHitbox.SetActive(true);
                             aState = AttackState.ATTACKING;
                             attackTimer = attackDuration;
                         }
-                        if(Input.GetKeyDown(KeyCode.Mouse1)){
+                        if(Input.GetKeyDown(KeyCode.Mouse1)){ // right click (feed)
+                            anim.feed();
+                            currentFeed = 25;
                             feedHitbox.SetActive(true);
                             aState = AttackState.ATTACKING;
                             attackTimer = attackDuration;
@@ -101,10 +127,11 @@ public class PlayerController : MonoBehaviour
                 }
             break;
         case PlayerState.DEAD:
+            anim.die();
             GetComponent<Rigidbody>().velocity = new Vector3();
             break;
         case PlayerState.FEEDING:
-            feedingTimer -= Time.deltaTime;
+                feedingTimer -= Time.deltaTime;
             if(feedingTimer < Time.deltaTime){
                 state = PlayerState.MOVING;
                 enemyAI.DestroyEnemy();
@@ -115,19 +142,27 @@ public class PlayerController : MonoBehaviour
             }
             break;
         case PlayerState.HIT:
-            if(aState == AttackState.ATTACKING){
+            anim.takeHit();
+            if (aState == AttackState.ATTACKING){
                 aState = AttackState.NOTATTACKING;
                 attackHitbox.SetActive(false);
                 feedHitbox.SetActive(false);
             }
             hitInvincibilityTimer-=Time.deltaTime;
-            if(hitInvincibilityTimer < 0){
-                state = PlayerState.DEAD;
+            if(hitInvincibilityTimer < 0){ // 
+                    if (currentHealth <= 0)
+                    {
+                        state = PlayerState.DEAD;
+                    } else
+                    {
+                        state = PlayerState.MOVING;
+                    }
             }
             break;
          }
     }
-
+    
+    
     public void changeReferenceAngle(float angle)
     {
         playerWorldRelationAngle = angle%360;
@@ -135,11 +170,14 @@ public class PlayerController : MonoBehaviour
 
     public void Hit(Vector3 enemyPos)
     {
-        if(state != PlayerState.HIT){
+        if (state != PlayerState.HIT){
             if(state == PlayerState.FEEDING){
                 enemyAI.StopFeeding();
             }
             state = PlayerState.HIT;
+            healthSlider.value = currentHealth - 1;
+            currentHealth = healthSlider.value;
+
             GetComponent<BoxCollider>().enabled = false;
             mesh.GetComponent<MeshRenderer>().material = foundTex;
             Vector3 forceDir = (transform.position-enemyPos);
@@ -161,17 +199,28 @@ public class PlayerController : MonoBehaviour
             enemyAI.StartFeeding();
         }
     }
+
+    void hunger()
+    {
+        currentFeed -= 1;
+        feedSlider.value = currentFeed;
+        if (currentFeed == 0)
+        {
+            state = PlayerState.DEAD;
+        }
+    }
+
     void OnCollisionEnter(Collision collision)
     {
         if (collision.gameObject.tag == "Wall")
         {
             if (key.isActiveAndEnabled)
             {
-                Debug.Log("YOU WIN");
+                dialogue.text = "The gate is unlocked";
             }
             else
             {
-                Debug.Log("Find the key!");
+                dialogue.text = "Find the key!";
             }
         }
     }
