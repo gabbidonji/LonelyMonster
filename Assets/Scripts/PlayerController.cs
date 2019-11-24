@@ -95,7 +95,7 @@ public class PlayerController : MonoBehaviour
     {
         float moveHorizontal = Input.GetAxis("Horizontal");
         float moveVertical = Input.GetAxis("Vertical");
-        if (axes == RotationAxis.MOUSEX)
+        if ((axes == RotationAxis.MOUSEX) && (state != PlayerState.DEAD))
         {
             transform.Rotate(0, Input.GetAxis("Mouse X") * HorizontalSpeed, 0);
         }
