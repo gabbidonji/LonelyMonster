@@ -44,7 +44,6 @@ public class Enemy1AI : MonoBehaviour, EnemyAI
         PATROL, PURSUE, CHECK, IMMOBILE
     }
 
-    // Start is called before the first frame update
     void Start()
     {
         attackState = AttackState.NOT_ATTACKING;
@@ -62,7 +61,6 @@ public class Enemy1AI : MonoBehaviour, EnemyAI
 
     void Update()
     {
-        //Debug.Log(attackState);
         switch(state){
             case EnemyState.PATROL:
                 vision.NotFollowingPlayer();
@@ -77,6 +75,8 @@ public class Enemy1AI : MonoBehaviour, EnemyAI
                 }
                 break;
             case EnemyState.PURSUE:
+                Debug.Log(nav.remainingDistance);
+                Debug.Log(attackState);
                 switch(attackState){
                     case AttackState.NOT_ATTACKING:
                         if(vision.SeesPlayer()){
@@ -117,6 +117,7 @@ public class Enemy1AI : MonoBehaviour, EnemyAI
                     case AttackState.POSTDELAY:
                         if(attackTimer < 0){
                             nav.enabled = true;
+                            nav.destination = lastSeenPlayerPos;
                             attackState = AttackState.NOT_ATTACKING;
                             if(player_ctr.IsFound()){
                                 targetPosIndex = FindClosestPathPoint();
@@ -133,12 +134,10 @@ public class Enemy1AI : MonoBehaviour, EnemyAI
                 if(!checkedLeft){
                     Vector3 leftRotation = checkCenterAngle;
                     leftRotation.y = leftRotation.y - 85;
-                    //Debug.Log("Left: " + leftRotation);
                     checkedLeft = RotateTowards(Mathf.Deg2Rad*leftRotation);
                 } else if (!checkedRight){
                     Vector3 rightRotation = checkCenterAngle;
                     rightRotation.y = rightRotation.y + 85;
-                    //Debug.Log("Right: " + rightRotation);
                     checkedRight = RotateTowards(Mathf.Deg2Rad*rightRotation);
                 } else {
                     checkedLeft = false;
@@ -168,10 +167,7 @@ public class Enemy1AI : MonoBehaviour, EnemyAI
     }
     bool FaceDirection(Vector3 position){
         Vector3 difference = position - transform.position;
-        //Debug.Log(difference);
-        //Debug.Log(Mathf.Atan2(difference.x, difference.z));
         Vector3 targetRotation = new Vector3(0,Mathf.Atan2(difference.x, difference.z),0);
-        //Debug.Log(targetRotation);
         return RotateTowards(targetRotation);
     }
 

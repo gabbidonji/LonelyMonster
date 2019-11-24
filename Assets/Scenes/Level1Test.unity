@@ -6503,7 +6503,12 @@ MonoBehaviour:
   mesh: {fileID: 1411931040}
   speed: 4
   foundTex: {fileID: 2100000, guid: 046ed279ee4f64af38274c9d7302c932, type: 2}
-  attackDuration: 0.2
+  attackPredelay: 0.3
+  attackDuration: 0.1
+  attackPostdelay: 0.2
+  feedPredelay: 0.1
+  feedDuration: 0.1
+  feedPostdelay: 0.2
   attackHitbox: {fileID: 2063365669}
   feedHitbox: {fileID: 1659500034}
   key: {fileID: 621640536}
@@ -7099,7 +7104,7 @@ MeshRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1659500034}
-  m_Enabled: 0
+  m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -8367,7 +8372,7 @@ MeshRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2063365669}
-  m_Enabled: 0
+  m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1

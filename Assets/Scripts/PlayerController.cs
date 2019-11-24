@@ -26,8 +26,18 @@ public class PlayerController : MonoBehaviour
 
     private AttackState aState;
 
-    [SerializeField]
-    private float attackDuration;
+    public float attackPredelay;
+
+    public float attackDuration;
+
+    public float attackPostdelay;
+
+    public float feedPredelay;
+
+    public float feedDuration;
+
+    public float feedPostdelay;
+
     private float attackTimer = 0;
 
     [SerializeField]
@@ -43,8 +53,10 @@ public class PlayerController : MonoBehaviour
     }
 
     private enum AttackState {
-        ATTACKING, NOTATTACKING
+        PREDELAY, POSTDELAY, ATTACKING, NOTATTACKING
     }
+
+    private bool isFeeding;
 
     public enum RotationAxis
     {
@@ -74,7 +86,7 @@ public class PlayerController : MonoBehaviour
         rb = GetComponent<Rigidbody>();
         oldPositionHoriz = Input.GetAxis("Horizontal");
         oldPositionVert = Input.GetAxis("Vertical");
-        InvokeRepeating("hunger", 2.0f, 1f);
+        //InvokeRepeating("hunger", 2.0f, 1f);
         anim = FindObjectOfType<AnimationController>();
     }
 
@@ -96,32 +108,62 @@ public class PlayerController : MonoBehaviour
         }
         switch (state){
             case PlayerState.MOVING:
-                Vector3 movement = new Vector3(moveVertical, 0.0f, -moveHorizontal);
-                GetComponent<Rigidbody>().velocity = transform.TransformDirection(movement) * speed;
                 switch(aState){
                     case AttackState.NOTATTACKING:
+                        Vector3 movement = new Vector3(moveVertical, 0.0f, -moveHorizontal);
+                        GetComponent<Rigidbody>().velocity = transform.TransformDirection(movement) * speed;
                         if (Input.GetKeyDown(KeyCode.Mouse0)) // left click (attack)
                         {
+                            isFeeding = false;
                             anim.attack();
-                            attackHitbox.SetActive(true);
-                            aState = AttackState.ATTACKING;
-                            attackTimer = attackDuration;
+                            //attackHitbox.SetActive(true);
+                            aState = AttackState.PREDELAY;
+                            attackTimer = attackPredelay;
                         }
                         if(Input.GetKeyDown(KeyCode.Mouse1)){ // right click (feed)
+                            isFeeding = true;
                             anim.feed();
                             currentFeed = 25;
-                            feedHitbox.SetActive(true);
+                            //feedHitbox.SetActive(true);
+                            aState = AttackState.PREDELAY;
+                            attackTimer = feedPredelay;
+                        }
+                        break;
+                    case AttackState.PREDELAY:
+                        GetComponent<Rigidbody>().velocity = new Vector3(0.0f, 0.0f, 0.0f);
+                        attackTimer -= Time.deltaTime;
+                        if(attackTimer < 0)
+                        {
+                            if(isFeeding){
+                                feedHitbox.SetActive(true);
+                                attackTimer = feedDuration;
+                            } else {
+                                attackHitbox.SetActive(true);
+                                attackTimer = attackDuration;
+                            }
                             aState = AttackState.ATTACKING;
-                            attackTimer = attackDuration;
                         }
                         break;
                     case AttackState.ATTACKING:
+                        GetComponent<Rigidbody>().velocity = new Vector3(0.0f, 0.0f, 0.0f);
+                        attackTimer -= Time.deltaTime;
+                        if(attackTimer < 0){
+                            if(isFeeding){
+                                attackTimer = feedPostdelay;
+                            } else {
+                                attackTimer = attackPostdelay;
+                            }
+                            aState = AttackState.POSTDELAY;
+                            feedHitbox.SetActive(false);
+                            attackHitbox.SetActive(false);
+                        }
+                        break;
+                    case AttackState.POSTDELAY:
+                        GetComponent<Rigidbody>().velocity = new Vector3(0.0f, 0.0f, 0.0f);
                         attackTimer -= Time.deltaTime;
                         if(attackTimer < 0)
                         {
                             aState = AttackState.NOTATTACKING;
-                            attackHitbox.SetActive(false);
-                            feedHitbox.SetActive(false);
                         }
                         break;
                 }
@@ -149,12 +191,13 @@ public class PlayerController : MonoBehaviour
                 feedHitbox.SetActive(false);
             }
             hitInvincibilityTimer-=Time.deltaTime;
-            if(hitInvincibilityTimer < 0){ // 
+            if(hitInvincibilityTimer < 0){
                     if (currentHealth <= 0)
                     {
                         state = PlayerState.DEAD;
                     } else
                     {
+                        GetComponent<BoxCollider>().enabled = true;
                         state = PlayerState.MOVING;
                     }
             }
