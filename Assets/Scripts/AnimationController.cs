@@ -5,9 +5,15 @@ using UnityEngine;
 public class AnimationController : MonoBehaviour
 {
     static Animator anim;
+    public enum Direction
+    {
+        BACKWARD, FORWARD, LEFT, RIGHT
+    }
+    public Direction dir;
     // Start is called before the first frame update
     void Start()
     {
+        dir = Direction.FORWARD;
         anim = GetComponent<Animator>();
         anim.SetBool("isWalking", false);
         anim.SetBool("isAttacking", false);
@@ -25,6 +31,14 @@ public class AnimationController : MonoBehaviour
 
     public void walk()
     {
+        if (dir == Direction.FORWARD)
+        {
+            anim.speed = 1;
+        }
+        else
+        {
+            anim.speed = -1;
+        }
         anim.SetBool("isWalking", true);
 
         anim.SetBool("isIdle", false);
