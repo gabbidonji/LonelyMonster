@@ -1,14 +1,16 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Audio;
 
 public class AttackController : MonoBehaviour
 {
+    public AudioClip hit;
+    public AudioSource asource;
     public KeyController key;
     // Start is called before the first frame update
     void Start()
     {
-
     }
 
     // Update is called once per frame
@@ -25,6 +27,7 @@ public class AttackController : MonoBehaviour
             {
                 key.showKey();
             }
+            asource.PlayOneShot(hit);
             Destroy(c.gameObject);
             
         }

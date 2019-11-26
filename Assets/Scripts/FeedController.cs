@@ -1,9 +1,13 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Audio;
 
 public class FeedController : MonoBehaviour
 {
+    public AudioSource asource;
+    public AudioClip hit;
+
     private PlayerController pc;
     // Start is called before the first frame update
     void Start()
@@ -23,6 +27,7 @@ public class FeedController : MonoBehaviour
         if(c.gameObject.tag == "Enemy")
         {
             pc.StartFeeding(c.gameObject.GetComponent<Enemy1AI>());
+            asource.PlayOneShot(hit);
         }
     }
 }
