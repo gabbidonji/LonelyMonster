@@ -75,7 +75,6 @@ public class Enemy1AI : MonoBehaviour, EnemyAI
                 }
                 break;
             case EnemyState.PURSUE:
-                Debug.Log(nav.remainingDistance);
                 Debug.Log(attackState);
                 switch(attackState){
                     case AttackState.NOT_ATTACKING:
