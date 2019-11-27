@@ -3585,6 +3585,11 @@ PrefabInstance:
       propertyPath: m_Avatar
       value: 
       objectReference: {fileID: 9000000, guid: ba293164aa0de4e6e94de31a555da1d1, type: 3}
+    - target: {fileID: -6057140222963153312, guid: ba293164aa0de4e6e94de31a555da1d1,
+        type: 3}
+      propertyPath: m_ApplyRootMotion
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: -4216859302048453862, guid: ba293164aa0de4e6e94de31a555da1d1,
         type: 3}
       propertyPath: m_LocalPosition.x
