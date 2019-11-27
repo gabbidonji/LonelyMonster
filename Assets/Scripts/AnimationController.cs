@@ -21,6 +21,8 @@ public class AnimationController : MonoBehaviour
         anim.SetBool("isIdle", true);
         anim.SetBool("isDying", false);
         anim.SetBool("isBeingHit", false);
+        anim.SetBool("isLeft", false);
+        anim.SetBool("isRight", false);
     }
 
     // Update is called once per frame
@@ -33,11 +35,11 @@ public class AnimationController : MonoBehaviour
     {
         if (dir == Direction.FORWARD)
         {
-            anim.speed = 1;
+            anim.SetFloat("animSpeed", 1);
         }
         else
         {
-            anim.speed = -1;
+            anim.SetFloat("animSpeed", -1);
         }
         anim.SetBool("isWalking", true);
 
@@ -46,6 +48,8 @@ public class AnimationController : MonoBehaviour
         anim.SetBool("isFeeding", false);
         anim.SetBool("isDying", false);
         anim.SetBool("isBeingHit", false);
+        anim.SetBool("isLeft", false);
+        anim.SetBool("isRight", false);
     }
 
     public void idle()
@@ -57,6 +61,8 @@ public class AnimationController : MonoBehaviour
         anim.SetBool("isFeeding", false);
         anim.SetBool("isDying", false);
         anim.SetBool("isBeingHit", false);
+        anim.SetBool("isLeft", false);
+        anim.SetBool("isRight", false);
     }
 
     public void attack()
@@ -68,6 +74,8 @@ public class AnimationController : MonoBehaviour
         anim.SetBool("isFeeding", false);
         anim.SetBool("isDying", false);
         anim.SetBool("isBeingHit", false);
+        anim.SetBool("isLeft", false);
+        anim.SetBool("isRight", false);
     }
 
     public void feed()
@@ -79,6 +87,8 @@ public class AnimationController : MonoBehaviour
         anim.SetBool("isWalking", false);
         anim.SetBool("isDying", false);
         anim.SetBool("isBeingHit", false);
+        anim.SetBool("isLeft", false);
+        anim.SetBool("isRight", false);
     }
 
     public void die()
@@ -90,6 +100,8 @@ public class AnimationController : MonoBehaviour
         anim.SetBool("isWalking", false);
         anim.SetBool("isBeingHit", false);
         anim.SetBool("isFeeding", false);
+        anim.SetBool("isLeft", false);
+        anim.SetBool("isRight", false);
     }
 
     public void takeHit()
@@ -101,5 +113,33 @@ public class AnimationController : MonoBehaviour
         anim.SetBool("isWalking", false);
         anim.SetBool("isDying", false);
         anim.SetBool("isFeeding", false);
+        anim.SetBool("isLeft", false);
+        anim.SetBool("isRight", false);
+    }
+
+    public void walkLeft()
+    {
+        anim.SetBool("isLeft", true);
+
+        anim.SetBool("isIdle", false);
+        anim.SetBool("isAttacking", false);
+        anim.SetBool("isWalking", false);
+        anim.SetBool("isDying", false);
+        anim.SetBool("isFeeding", false);
+        anim.SetBool("isBeingHit", false);
+        anim.SetBool("isRight", false);
+    }
+
+    public void walkRight()
+    {
+        anim.SetBool("isRight", true);
+
+        anim.SetBool("isIdle", false);
+        anim.SetBool("isAttacking", false);
+        anim.SetBool("isWalking", false);
+        anim.SetBool("isDying", false);
+        anim.SetBool("isFeeding", false);
+        anim.SetBool("isBeingHit", false);
+        anim.SetBool("isLeft", false);
     }
 }

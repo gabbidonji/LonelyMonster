@@ -101,15 +101,23 @@ public class PlayerController : MonoBehaviour
         }
         if (oldPositionHoriz != moveHorizontal || oldPositionVert != moveVertical) // walking
         {
-            if (oldPositionHoriz > moveHorizontal)
+            if (oldPositionVert > moveVertical)
             {
                 anim.dir = AnimationController.Direction.BACKWARD;
+                anim.walk();
+            }
+            else if (oldPositionVert < moveVertical)
+            {
+                anim.dir = AnimationController.Direction.FORWARD;
+                anim.walk();
+            }
+            else if (oldPositionHoriz > moveHorizontal){
+                anim.walkLeft();
             }
             else
             {
-                anim.dir = AnimationController.Direction.FORWARD;
+                anim.walkRight();
             }
-            anim.walk();
         } else
         {
             anim.idle();

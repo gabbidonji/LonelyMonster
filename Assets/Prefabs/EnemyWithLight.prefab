@@ -428,7 +428,7 @@ MonoBehaviour:
   rotationSpeed: 200
   movementSpeed: 7
   attackTriggerDist: 1.5
-  attackPredelay: 0.1
+  attackPredelay: 0.3
   attackLength: 0.25
   attackPostdelay: 0.2
   attackHitbox: {fileID: 5411774834997220814}
