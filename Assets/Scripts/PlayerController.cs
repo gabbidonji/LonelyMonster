@@ -86,7 +86,7 @@ public class PlayerController : MonoBehaviour
         rb = GetComponent<Rigidbody>();
         oldPositionHoriz = Input.GetAxis("Horizontal");
         oldPositionVert = Input.GetAxis("Vertical");
-        //InvokeRepeating("hunger", 2.0f, 1f);
+        InvokeRepeating("hunger", 2.0f, 2f);
         anim = FindObjectOfType<AnimationController>();
     }
 
@@ -185,8 +185,7 @@ public class PlayerController : MonoBehaviour
                 }
             break;
         case PlayerState.DEAD:
-            anim.die();
-            GetComponent<Rigidbody>().velocity = new Vector3();
+                death();
             break;
         case PlayerState.FEEDING:
                 feedingTimer -= Time.deltaTime;
@@ -234,7 +233,7 @@ public class PlayerController : MonoBehaviour
                 enemyAI.StopFeeding();
             }
             state = PlayerState.HIT;
-            healthSlider.value = currentHealth - 1;
+            decreaseHealth();
             currentHealth = healthSlider.value;
 
             GetComponent<BoxCollider>().enabled = false;
@@ -259,17 +258,30 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    void decreaseHealth()
+    {
+        healthSlider.value = currentHealth - 1;
+    }
+
     void hunger()
     {
         currentFeed -= 1;
         feedSlider.value = currentFeed;
         if (currentFeed == 0)
         {
-            state = PlayerState.DEAD;
+            InvokeRepeating("decreaseHealth", 2.0f, 2f);
         }
     }
 
-    void OnCollisionEnter(Collision collision)
+    private void death()
+    {
+        anim.die();
+        GetComponent<Rigidbody>().velocity = new Vector3();
+        //yield return new WaitForSeconds(2f);
+        GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationY | RigidbodyConstraints.FreezePositionX | RigidbodyConstraints.FreezePositionZ;
+    }
+
+        void OnCollisionEnter(Collision collision)
     {
         if (collision.gameObject.tag == "Wall")
         {
