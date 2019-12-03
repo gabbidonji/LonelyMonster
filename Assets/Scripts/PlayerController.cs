@@ -269,7 +269,7 @@ public class PlayerController : MonoBehaviour
         feedSlider.value = currentFeed;
         if (currentFeed == 0)
         {
-            InvokeRepeating("decreaseHealth", 2.0f, 2f);
+            death();
         }
     }
 
@@ -277,6 +277,7 @@ public class PlayerController : MonoBehaviour
     {
         anim.die();
         GetComponent<Rigidbody>().velocity = new Vector3();
+        Time.timeScale = 0.5f;
         //yield return new WaitForSeconds(2f);
         GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationY | RigidbodyConstraints.FreezePositionX | RigidbodyConstraints.FreezePositionZ;
     }
