@@ -263,16 +263,6 @@ public class PlayerController : MonoBehaviour
         healthSlider.value = currentHealth - 1;
     }
 
-    void hunger()
-    {
-        currentFeed -= 1;
-        feedSlider.value = currentFeed;
-        if (currentFeed == 0)
-        {
-            death();
-        }
-    }
-
     private void death()
     {
         anim.die();
@@ -280,6 +270,17 @@ public class PlayerController : MonoBehaviour
         Time.timeScale = 0.5f;
         //yield return new WaitForSeconds(2f);
         GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationY | RigidbodyConstraints.FreezePositionX | RigidbodyConstraints.FreezePositionZ;
+    }
+
+    void hunger()
+    {
+        currentFeed -= 1;
+        feedSlider.value = currentFeed;
+        if (currentFeed == 0)
+        {
+            anim.die();
+            death(); // not working
+        }
     }
 
         void OnCollisionEnter(Collision collision)
