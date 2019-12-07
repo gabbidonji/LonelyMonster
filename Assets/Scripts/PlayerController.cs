@@ -139,7 +139,6 @@ public class PlayerController : MonoBehaviour
                         if(Input.GetKeyDown(KeyCode.Mouse1)){ // right click (feed)
                             isFeeding = true;
                             anim.feed();
-                            currentFeed = 25;
                             //feedHitbox.SetActive(true);
                             aState = AttackState.PREDELAY;
                             attackTimer = feedPredelay;
@@ -185,11 +184,12 @@ public class PlayerController : MonoBehaviour
                 }
             break;
         case PlayerState.DEAD:
-                death();
+            death();
             break;
         case PlayerState.FEEDING:
-                feedingTimer -= Time.deltaTime;
+            feedingTimer -= Time.deltaTime;
             if(feedingTimer < Time.deltaTime){
+                currentFeed = 25;
                 state = PlayerState.MOVING;
                 enemyAI.DestroyEnemy();
             }
