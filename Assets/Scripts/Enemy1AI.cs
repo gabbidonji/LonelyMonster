@@ -100,6 +100,7 @@ public class Enemy1AI : MonoBehaviour, EnemyAI
                                 attackState = AttackState.PREDELAY;
                             }
                         } else {
+                            nav.enabled = true;
                             nav.destination = lastSeenPlayerPos;
                             if(nav.remainingDistance < 0.001) {
                                 nav.enabled = false;
