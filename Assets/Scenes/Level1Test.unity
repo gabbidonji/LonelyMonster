@@ -1469,7 +1469,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 8300000, guid: 4ac241df1a67c4b0a954ef76f0a95e37, type: 3}
   m_PlayOnAwake: 1
-  m_Volume: 1
+  m_Volume: 0.1
   m_Pitch: 1
   Loop: 1
   Mute: 0
@@ -7257,6 +7257,7 @@ MonoBehaviour:
   key: {fileID: 621640536}
   dialogue: {fileID: 1606452096}
   punchWoosh: {fileID: 8300000, guid: 3a60f7beed7264aa2a7abeaa09f27b88, type: 3}
+  drinking: {fileID: 8300000, guid: 9467168efca9b4b70bf506317a664016, type: 3}
   asource: {fileID: 1494996273}
   axes: 1
   HorizontalSpeed: 10
