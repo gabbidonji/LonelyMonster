@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class EnemyAttackController : MonoBehaviour
 {
+    public AudioClip hit;
+    public AudioSource asource;
     Transform parent_tr;
     // Start is called before the first frame update
     void Start()
@@ -22,6 +24,7 @@ public class EnemyAttackController : MonoBehaviour
         if(c.gameObject.tag == "Player")
         {
             c.gameObject.GetComponent<PlayerController>().Hit(parent_tr.position);
+            asource.PlayOneShot(hit);
         }
     }
 }

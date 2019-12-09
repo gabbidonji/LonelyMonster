@@ -47,6 +47,9 @@ public class PlayerController : MonoBehaviour
 
     public KeyController key;
     public Text dialogue;
+    public AudioClip punchWoosh;
+    public AudioClip drinking;
+    public AudioSource asource;
 
     private enum PlayerState{
         MOVING, HIT, FEEDING, DEAD
@@ -156,6 +159,7 @@ public class PlayerController : MonoBehaviour
                                 attackHitbox.SetActive(true);
                                 attackTimer = attackDuration;
                             }
+                            asource.PlayOneShot(punchWoosh);
                             aState = AttackState.ATTACKING;
                         }
                         break;
@@ -251,6 +255,7 @@ public class PlayerController : MonoBehaviour
 
     public void StartFeeding(EnemyAI AI){
         if((state != PlayerState.FEEDING) && !(AI.SeesPlayer())){
+            asource.PlayOneShot(drinking);
             state = PlayerState.FEEDING;
             feedingTimer = feedingTime;
             enemyAI = AI;
