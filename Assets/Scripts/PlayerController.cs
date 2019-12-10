@@ -216,6 +216,7 @@ public class PlayerController : MonoBehaviour
                     if (currentHealth <= 0)
                     {
                         gameOverText.text = "Hunters killed\nyou";
+                        CancelInvoke();
                         dialogue.text = "";
                         state = PlayerState.DEAD;
                     } else
@@ -289,6 +290,7 @@ public class PlayerController : MonoBehaviour
         if (currentFeed == 0)
         {
             gameOverText.text = "You died of\nthirst";
+            CancelInvoke();
             dialogue.text = "";
             state = PlayerState.DEAD;
         }

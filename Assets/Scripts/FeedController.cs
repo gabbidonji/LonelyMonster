@@ -24,7 +24,7 @@ public class FeedController : MonoBehaviour
 
     void OnTriggerEnter(Collider c)
     {
-        if(c.gameObject.tag == "Enemy")
+        if(c.gameObject.tag == "Enemy" || c.gameObject.tag == "EnemyWithKey")
         {
             pc.StartFeeding(c.gameObject.GetComponent<Enemy1AI>());
             asource.PlayOneShot(hit);

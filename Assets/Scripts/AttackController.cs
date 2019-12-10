@@ -30,7 +30,7 @@ public class AttackController : MonoBehaviour
             asource.PlayOneShot(hit);
             c.gameObject.GetComponent<Enemy1AI>().Hit();
             this.enabled = false;
-            
+            Debug.Log(UnityEngine.StackTraceUtility.ExtractStackTrace());
         }
     }
 }
