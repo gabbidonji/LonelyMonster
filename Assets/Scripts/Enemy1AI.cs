@@ -172,16 +172,10 @@ public class Enemy1AI : MonoBehaviour, EnemyAI
                 }
                 break;
             case EnemyState.IMMOBILE:
+                anim.getBitten();
                 break;
             case EnemyState.DEAD:
-                anim.die();
                 nav.enabled = false;
-                GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationY | RigidbodyConstraints.FreezeRotationZ | RigidbodyConstraints.FreezePositionX | RigidbodyConstraints.FreezePositionY | RigidbodyConstraints.FreezePositionZ;
-                GetComponent<BoxCollider>().enabled = false;
-                foreach(BoxCollider bc in GetComponentsInChildren<BoxCollider>()){
-                    bc.enabled = false;
-                }
-
                 break;
         }
     }
@@ -247,6 +241,11 @@ public class Enemy1AI : MonoBehaviour, EnemyAI
 
     public void DestroyEnemy(){
         state = EnemyState.DEAD;
+        GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationY | RigidbodyConstraints.FreezeRotationZ | RigidbodyConstraints.FreezePositionX | RigidbodyConstraints.FreezePositionY | RigidbodyConstraints.FreezePositionZ;
+        GetComponent<BoxCollider>().enabled = false;
+        foreach(BoxCollider bc in GetComponentsInChildren<BoxCollider>()){
+            bc.enabled = false;
+        }
     }
 
     public bool SeesPlayer(){
@@ -259,6 +258,7 @@ public class Enemy1AI : MonoBehaviour, EnemyAI
         hp -= 1;
         if(hp <= 0){
             DestroyEnemy();
+            anim.die();
         }
         // rb.velocity = new Vector3(0,0,0);
         // GetComponent<BoxCollider>().enabled = false;
