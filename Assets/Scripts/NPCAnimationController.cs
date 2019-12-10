@@ -5,24 +5,15 @@ using UnityEngine;
 public class NPCAnimationController : MonoBehaviour
 {
     static Animator anim;
-    public enum Direction
-    {
-        BACKWARD, FORWARD, LEFT, RIGHT
-    }
-    public Direction dir;
     // Start is called before the first frame update
     void Start()
     {
-        dir = Direction.FORWARD;
         anim = GetComponent<Animator>();
-        anim.SetBool("isWalking", false);
-        anim.SetBool("isAttacking", false);
-        anim.SetBool("isFeeding", false);
-        anim.SetBool("isIdle", true);
-        anim.SetBool("isDying", false);
-        anim.SetBool("isBeingHit", false);
-        anim.SetBool("isLeft", false);
-        anim.SetBool("isRight", false);
+        anim.SetBool("is_Walking", true);
+        anim.SetBool("is_Punching", false);
+        anim.SetBool("is_Dying", false);
+        anim.SetBool("is_Being_Bitten", false);
+        anim.SetBool("is_Being_Attacked", false);
     }
 
     // Update is called once per frame
@@ -33,88 +24,52 @@ public class NPCAnimationController : MonoBehaviour
 
     public void walk()
     {
-        if (dir == Direction.FORWARD)
-        {
-            anim.SetFloat("animSpeed", 1);
-        }
-        else
-        {
-            anim.SetFloat("animSpeed", -1);
-        }
-        anim.SetBool("isWalking", true);
+        anim.SetBool("is_Walking", true);
 
-        anim.SetBool("isIdle", false);
-        anim.SetBool("isAttacking", false);
-        anim.SetBool("isFeeding", false);
-        anim.SetBool("isDying", false);
-        anim.SetBool("isBeingHit", false);
-        anim.SetBool("isLeft", false);
-        anim.SetBool("isRight", false);
+        anim.SetBool("is_Punching", false);
+        anim.SetBool("is_Dying", false);
+        anim.SetBool("is_Being_Bitten", false);
+        anim.SetBool("is_Being_Attacked", false);
     }
 
-    public void idle()
+    public void punch()
     {
-        anim.SetBool("isIdle", true);
+        anim.SetBool("is_Punching", true);
 
-        anim.SetBool("isWalking", false);
-        anim.SetBool("isAttacking", false);
-        anim.SetBool("isFeeding", false);
-        anim.SetBool("isDying", false);
-        anim.SetBool("isBeingHit", false);
-        anim.SetBool("isLeft", false);
-        anim.SetBool("isRight", false);
-    }
-
-    public void attack()
-    {
-        anim.SetBool("isAttacking", true);
-
-        anim.SetBool("isIdle", false);
-        anim.SetBool("isWalking", false);
-        anim.SetBool("isFeeding", false);
-        anim.SetBool("isDying", false);
-        anim.SetBool("isBeingHit", false);
-        anim.SetBool("isLeft", false);
-        anim.SetBool("isRight", false);
-    }
-
-    public void feed()
-    {
-        anim.SetBool("isFeeding", true);
-
-        anim.SetBool("isIdle", false);
-        anim.SetBool("isAttacking", false);
-        anim.SetBool("isWalking", false);
-        anim.SetBool("isDying", false);
-        anim.SetBool("isBeingHit", false);
-        anim.SetBool("isLeft", false);
-        anim.SetBool("isRight", false);
+        anim.SetBool("is_Walking", false);
+        anim.SetBool("is_Dying", false);
+        anim.SetBool("is_Being_Bitten", false);
+        anim.SetBool("is_Being_Attacked", false);
     }
 
     public void die()
     {
-        anim.SetBool("isDying", true);
+        anim.SetBool("is_Dying", true);
 
-        anim.SetBool("isIdle", false);
-        anim.SetBool("isAttacking", false);
-        anim.SetBool("isWalking", false);
-        anim.SetBool("isBeingHit", false);
-        anim.SetBool("isFeeding", false);
-        anim.SetBool("isLeft", false);
-        anim.SetBool("isRight", false);
+        anim.SetBool("is_Walking", false);
+        anim.SetBool("is_Punching", false);
+        anim.SetBool("is_Being_Bitten", false);
+        anim.SetBool("is_Being_Attacked", false);
     }
 
-    public void takeHit()
+    public void getBitten()
     {
-        anim.SetBool("isBeingHit", true);
+        anim.SetBool("is_Being_Bitten", true);
 
-        anim.SetBool("isIdle", false);
-        anim.SetBool("isAttacking", false);
-        anim.SetBool("isWalking", false);
-        anim.SetBool("isDying", false);
-        anim.SetBool("isFeeding", false);
-        anim.SetBool("isLeft", false);
-        anim.SetBool("isRight", false);
+        anim.SetBool("is_Walking", false);
+        anim.SetBool("is_Punching", false);
+        anim.SetBool("is_Dying", false);
+        anim.SetBool("is_Being_Attacked", false);
+    }
+
+    public void getAttacked()
+    {
+        anim.SetBool("is_Being_Attacked", true);
+
+        anim.SetBool("is_Walking", false);
+        anim.SetBool("is_Punching", false);
+        anim.SetBool("is_Dying", false);
+        anim.SetBool("is_Being_Bitten", false);
     }
 
     public void walkLeft()
@@ -128,18 +83,5 @@ public class NPCAnimationController : MonoBehaviour
         anim.SetBool("isFeeding", false);
         anim.SetBool("isBeingHit", false);
         anim.SetBool("isRight", false);
-    }
-
-    public void walkRight()
-    {
-        anim.SetBool("isRight", true);
-
-        anim.SetBool("isIdle", false);
-        anim.SetBool("isAttacking", false);
-        anim.SetBool("isWalking", false);
-        anim.SetBool("isDying", false);
-        anim.SetBool("isFeeding", false);
-        anim.SetBool("isBeingHit", false);
-        anim.SetBool("isLeft", false);
     }
 }

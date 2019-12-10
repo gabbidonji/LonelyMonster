@@ -68,7 +68,6 @@ public class PlayerController : MonoBehaviour
 
     public RotationAxis axes = RotationAxis.MOUSEX;
     public float HorizontalSpeed = 100.0f;
-    public float rotationX = 0;
     private AnimationController anim;
 
     private float oldPositionHoriz;
