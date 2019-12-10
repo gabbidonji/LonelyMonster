@@ -39,7 +39,7 @@ public class Enemy1AI : MonoBehaviour, EnemyAI
     private bool turning;
 
     public int hp;
-
+    private NPCAnimationController anim;
     enum AttackState {
         NOT_ATTACKING, PREDELAY, ATTACKING, POSTDELAY
     }
@@ -62,12 +62,14 @@ public class Enemy1AI : MonoBehaviour, EnemyAI
         checkedLeft = false;
         checking = false;
         turning = true;
+        anim = GetComponentInChildren<NPCAnimationController>();
     }
 
     void Update()
     {
         switch(state){
             case EnemyState.PATROL:
+                anim.walk();
                 vision.NotFollowingPlayer();
                 if(vision.SeesPlayer() && !player_ctr.IsFound()){
                     vision.FollowingPlayer();

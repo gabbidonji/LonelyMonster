@@ -289,7 +289,7 @@ public class PlayerController : MonoBehaviour
 
         void OnCollisionEnter(Collision collision)
     {
-        if (collision.gameObject.tag == "Wall")
+        if (collision.gameObject.tag == "Gate")
         {
             if (key.isActiveAndEnabled)
             {

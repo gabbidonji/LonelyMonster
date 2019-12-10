@@ -435,6 +435,7 @@ MonoBehaviour:
   attackLength: 0.25
   attackPostdelay: 0.2
   attackHitbox: {fileID: 5411774834997220814}
+  hp: 0
 --- !u!1 &8600319793115727337
 GameObject:
   m_ObjectHideFlags: 0
