@@ -238,7 +238,7 @@ public class PlayerController : MonoBehaviour
             state = PlayerState.HIT;
             decreaseHealth();
             currentHealth = healthSlider.value;
-            rb.velocity = new Vector3(0, 0, 0);
+            rb.velocity = new Vector3(0,0,0);
             GetComponent<BoxCollider>().enabled = false;
             mesh.GetComponent<MeshRenderer>().material = foundTex;
             Vector3 forceDir = (transform.position-enemyPos);
