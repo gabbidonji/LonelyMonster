@@ -36,6 +36,8 @@ public class Enemy1AI : MonoBehaviour, EnemyAI
 
     private AttackState attackState;
 
+    private Rigidbody rb;
+
     private bool turning;
 
     public int hp;
@@ -50,6 +52,7 @@ public class Enemy1AI : MonoBehaviour, EnemyAI
 
     void Start()
     {
+        rb = GetComponent<Rigidbody>();
         attackState = AttackState.NOT_ATTACKING;
         state = EnemyState.PATROL;
         nav = GetComponent<NavMeshAgent>();
@@ -135,6 +138,7 @@ public class Enemy1AI : MonoBehaviour, EnemyAI
                         }
                         break;
                     case AttackState.POSTDELAY:
+                        anim.walk();
                         if (attackTimer < 0){
                             nav.enabled = true;
                             nav.destination = lastSeenPlayerPos;
@@ -260,10 +264,10 @@ public class Enemy1AI : MonoBehaviour, EnemyAI
             DestroyEnemy();
             anim.die();
         }
-        // rb.velocity = new Vector3(0,0,0);
+        //rb.velocity = new Vector3(0,0,0);
         // GetComponent<BoxCollider>().enabled = false;
-        // Vector3 forceDir = (transform.position-playerPos);
-        // forceDir[1] = 0;
-        // rb.AddForce(50*forceDir.normalized);
+        //Vector3 forceDir = (transform.position-playerPos);
+        //forceDir[1] = 0;
+        //rb.AddForce(200*forceDir.normalized);
     }
 }

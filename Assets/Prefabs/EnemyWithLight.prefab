@@ -388,8 +388,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   player: {fileID: 0}
-  visionDistance: 5
-  followingVisionDistance: 7
+  visionDistance: 4
+  followingVisionDistance: 5
   fieldOfView: 45
   followingFieldOfView: 120
 --- !u!195 &2882763833870447352
@@ -431,9 +431,9 @@ MonoBehaviour:
   rotationSpeed: 140
   movementSpeed: 7
   attackTriggerDist: 1.5
-  attackPredelay: 0.3
-  attackLength: 0.25
-  attackPostdelay: 0.2
+  attackPredelay: 0.1
+  attackLength: 0.1
+  attackPostdelay: 2.5
   attackHitbox: {fileID: 5411774834997220814}
   hp: 0
 --- !u!1 &8600319793115727337
