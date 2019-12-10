@@ -10363,8 +10363,6 @@ MonoBehaviour:
   feedHitbox: {fileID: 1659500034}
   key: {fileID: 621640536}
   dialogue: {fileID: 1606452096}
-  gameOverText: {fileID: 1955505356}
-  menu: {fileID: 1545306383}
   punchWoosh: {fileID: 8300000, guid: 3a60f7beed7264aa2a7abeaa09f27b88, type: 3}
   drinking: {fileID: 8300000, guid: 9467168efca9b4b70bf506317a664016, type: 3}
   asource: {fileID: 1494996273}
@@ -10949,18 +10947,6 @@ RectTransform:
     type: 3}
   m_PrefabInstance: {fileID: 1544927438}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &1545306383 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 8536467838039978821, guid: 09ff76b83d7a41f4ab83920327007d1e,
-    type: 3}
-  m_PrefabInstance: {fileID: 1544927438}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!4 &1560215133 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -4216859302048453862, guid: ba293164aa0de4e6e94de31a555da1d1,

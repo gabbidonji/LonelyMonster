@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class PlayerController : MonoBehaviour
 {
@@ -16,6 +17,8 @@ public class PlayerController : MonoBehaviour
     public GameObject mesh;
 
     private Rigidbody rb;
+
+    private int sceneToFinish=2;
 
     [SerializeField]
     private float speed;
@@ -47,8 +50,6 @@ public class PlayerController : MonoBehaviour
 
     public KeyController key;
     public Text dialogue;
-    public Text gameOverText;
-    public Button menu;
     public AudioClip punchWoosh;
     public AudioClip drinking;
     public AudioSource asource;
@@ -92,7 +93,6 @@ public class PlayerController : MonoBehaviour
         oldPositionVert = Input.GetAxis("Vertical");
         InvokeRepeating("hunger", 2.0f, 2f);
         anim = FindObjectOfType<AnimationController>();
-        gameOverText.gameObject.SetActive(true);
     }
 
     // Update is called once per frame
@@ -190,7 +190,7 @@ public class PlayerController : MonoBehaviour
                 }
             break;
         case PlayerState.DEAD:
-            death();
+            death(sceneToFinish);
             break;
         case PlayerState.FEEDING:
             feedingTimer -= Time.deltaTime;
@@ -215,9 +215,9 @@ public class PlayerController : MonoBehaviour
             if(hitInvincibilityTimer < 0){
                     if (currentHealth <= 0)
                     {
-                        gameOverText.text = "Hunters killed\nyou";
                         CancelInvoke();
                         dialogue.text = "";
+                        sceneToFinish = 2;
                         state = PlayerState.DEAD;
                     } else
                     {
@@ -273,14 +273,20 @@ public class PlayerController : MonoBehaviour
         healthSlider.value = currentHealth - 1;
     }
 
-    private void death()
+    private void death(int scene)
     {
         anim.die();
         GetComponent<Rigidbody>().velocity = new Vector3();
         GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationY | RigidbodyConstraints.FreezeRotationZ | RigidbodyConstraints.FreezePositionX | RigidbodyConstraints.FreezePositionY | RigidbodyConstraints.FreezePositionZ;
         foreach(BoxCollider bc in GetComponentsInChildren<BoxCollider>()) bc.enabled = false;
         GetComponent<BoxCollider>().enabled = false;
-        menu.gameObject.SetActive(true);
+        StartCoroutine(Wait(4, scene));
+    }
+
+    private IEnumerator Wait(float waitTime, int scene)
+    {
+        yield return new WaitForSeconds(waitTime);
+        SceneManager.LoadScene(scene);
     }
 
     void hunger()
@@ -289,9 +295,9 @@ public class PlayerController : MonoBehaviour
         feedSlider.value = currentFeed;
         if (currentFeed == 0)
         {
-            gameOverText.text = "You died of\nthirst";
             CancelInvoke();
             dialogue.text = "";
+            sceneToFinish = 4;
             state = PlayerState.DEAD;
         }
     }
@@ -302,10 +308,7 @@ public class PlayerController : MonoBehaviour
         {
             if (key.isActiveAndEnabled)
             {
-                gameOverText.text = "Congratulations!\nYou escaped!";
-                dialogue.text = "";
-                menu.gameObject.SetActive(true);
-                Time.timeScale = 0;
+                SceneManager.LoadScene(3);
             }
         }
     }
