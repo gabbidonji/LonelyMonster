@@ -93,8 +93,10 @@ public class Enemy1AI : MonoBehaviour, EnemyAI
                 }
                 break;
             case EnemyState.PURSUE:
-                switch(attackState){
+                anim.walk();
+                switch (attackState){
                     case AttackState.NOT_ATTACKING:
+                        anim.walk();
                         nav.enabled = true;
                         if(vision.SeesPlayer()){
                             nav.destination = player_tr.position;
@@ -114,7 +116,7 @@ public class Enemy1AI : MonoBehaviour, EnemyAI
                         }
                         break;
                     case AttackState.PREDELAY:
-                        if(attackTimer < 0){
+                        if (attackTimer < 0){
                             attackTimer = attackLength;
                             attackState = AttackState.ATTACKING;
                             attackHitbox.SetActive(true);
@@ -123,7 +125,8 @@ public class Enemy1AI : MonoBehaviour, EnemyAI
                         }
                         break;
                     case AttackState.ATTACKING:
-                        if(attackTimer < 0){
+                        anim.punch();
+                        if (attackTimer < 0){
                             attackHitbox.SetActive(false);
                             attackTimer = attackPostdelay;
                             attackState = AttackState.POSTDELAY;
@@ -132,7 +135,7 @@ public class Enemy1AI : MonoBehaviour, EnemyAI
                         }
                         break;
                     case AttackState.POSTDELAY:
-                        if(attackTimer < 0){
+                        if (attackTimer < 0){
                             nav.enabled = true;
                             nav.destination = lastSeenPlayerPos;
                             attackState = AttackState.NOT_ATTACKING;
@@ -171,6 +174,7 @@ public class Enemy1AI : MonoBehaviour, EnemyAI
             case EnemyState.IMMOBILE:
                 break;
             case EnemyState.DEAD:
+                anim.die();
                 nav.enabled = false;
                 GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationY | RigidbodyConstraints.FreezeRotationZ | RigidbodyConstraints.FreezePositionX | RigidbodyConstraints.FreezePositionY | RigidbodyConstraints.FreezePositionZ;
                 GetComponent<BoxCollider>().enabled = false;

@@ -35,7 +35,7 @@ public class NPCAnimationController : MonoBehaviour
     public void punch()
     {
         anim.SetBool("is_Punching", true);
-
+        
         anim.SetBool("is_Walking", false);
         anim.SetBool("is_Dying", false);
         anim.SetBool("is_Being_Bitten", false);
