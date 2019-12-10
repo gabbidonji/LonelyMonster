@@ -172,10 +172,12 @@ public class Enemy1AI : MonoBehaviour, EnemyAI
                 break;
             case EnemyState.DEAD:
                 nav.enabled = false;
+                GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationY | RigidbodyConstraints.FreezeRotationZ | RigidbodyConstraints.FreezePositionX | RigidbodyConstraints.FreezePositionY | RigidbodyConstraints.FreezePositionZ;
                 GetComponent<BoxCollider>().enabled = false;
                 foreach(BoxCollider bc in GetComponentsInChildren<BoxCollider>()){
                     bc.enabled = false;
                 }
+
                 break;
         }
     }

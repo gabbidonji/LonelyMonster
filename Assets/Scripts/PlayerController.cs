@@ -273,7 +273,9 @@ public class PlayerController : MonoBehaviour
         GetComponent<Rigidbody>().velocity = new Vector3();
         Time.timeScale = 0.5f;
         //yield return new WaitForSeconds(2f);
-        GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationY | RigidbodyConstraints.FreezePositionX | RigidbodyConstraints.FreezePositionZ;
+        GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationY | RigidbodyConstraints.FreezeRotationZ | RigidbodyConstraints.FreezePositionX | RigidbodyConstraints.FreezePositionY | RigidbodyConstraints.FreezePositionZ;
+        foreach(BoxCollider bc in GetComponentsInChildren<BoxCollider>()) bc.enabled = false;
+        GetComponent<BoxCollider>().enabled = false;
     }
 
     void hunger()
