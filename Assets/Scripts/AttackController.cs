@@ -28,7 +28,8 @@ public class AttackController : MonoBehaviour
                 key.showKey();
             }
             asource.PlayOneShot(hit);
-            Destroy(c.gameObject);
+            c.gameObject.GetComponent<Enemy1AI>().Hit();
+            this.enabled = false;
             
         }
     }

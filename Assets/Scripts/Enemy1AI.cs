@@ -38,12 +38,14 @@ public class Enemy1AI : MonoBehaviour, EnemyAI
 
     private bool turning;
 
+    public int hp;
+
     enum AttackState {
         NOT_ATTACKING, PREDELAY, ATTACKING, POSTDELAY
     }
 
     enum EnemyState {
-        PATROL, PURSUE, CHECK, IMMOBILE
+        PATROL, PURSUE, CHECK, IMMOBILE, HIT,  DEAD
     }
 
     void Start()
@@ -166,6 +168,13 @@ public class Enemy1AI : MonoBehaviour, EnemyAI
                 break;
             case EnemyState.IMMOBILE:
                 break;
+            case EnemyState.DEAD:
+                nav.enabled = false;
+                GetComponent<BoxCollider>().enabled = false;
+                foreach(BoxCollider bc in GetComponentsInChildren<BoxCollider>()){
+                    bc.enabled = false;
+                }
+                break;
         }
     }
 
@@ -229,10 +238,24 @@ public class Enemy1AI : MonoBehaviour, EnemyAI
     }
 
     public void DestroyEnemy(){
-        Destroy(this.gameObject);
+        state = EnemyState.DEAD;
     }
 
     public bool SeesPlayer(){
         return vision.SeesPlayer();
+    }
+
+    public void Hit()
+    {
+        Vector3 playerPos = player.transform.position;
+        hp -= 1;
+        if(hp <= 0){
+            DestroyEnemy();
+        }
+        // rb.velocity = new Vector3(0,0,0);
+        // GetComponent<BoxCollider>().enabled = false;
+        // Vector3 forceDir = (transform.position-playerPos);
+        // forceDir[1] = 0;
+        // rb.AddForce(50*forceDir.normalized);
     }
 }
