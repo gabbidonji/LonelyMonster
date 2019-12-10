@@ -9,6 +9,8 @@ TagManager:
   - Enemy
   - EnemyWithKey
   - Gate
+  - enemy1
+  - enemy2
   layers:
   - Default
   - TransparentFX

@@ -22,8 +22,9 @@ public class NPCAnimationController : MonoBehaviour
 
     }
 
-    public void walk()
+    public void walk(GameObject obj)
     {
+        anim = obj.GetComponentInChildren<Animator>();
         anim.SetBool("is_Walking", true);
 
         anim.SetBool("is_Punching", false);
@@ -32,8 +33,9 @@ public class NPCAnimationController : MonoBehaviour
         anim.SetBool("is_Being_Attacked", false);
     }
 
-    public void punch()
+    public void punch(GameObject obj)
     {
+        anim = obj.GetComponentInChildren<Animator>();
         anim.SetBool("is_Punching", true);
         
         anim.SetBool("is_Walking", false);
@@ -42,8 +44,9 @@ public class NPCAnimationController : MonoBehaviour
         anim.SetBool("is_Being_Attacked", false);
     }
 
-    public void die()
+    public void die(GameObject obj)
     {
+        anim = obj.GetComponentInChildren<Animator>();
         anim.SetBool("is_Dying", true);
 
         anim.SetBool("is_Walking", false);
@@ -52,8 +55,9 @@ public class NPCAnimationController : MonoBehaviour
         anim.SetBool("is_Being_Attacked", false);
     }
 
-    public void getBitten()
+    public void getBitten(GameObject obj)
     {
+        anim = obj.GetComponentInChildren<Animator>();
         anim.SetBool("is_Being_Bitten", true);
 
         anim.SetBool("is_Walking", false);
@@ -62,8 +66,9 @@ public class NPCAnimationController : MonoBehaviour
         anim.SetBool("is_Being_Attacked", false);
     }
 
-    public void getAttacked()
+    public void getAttacked(GameObject obj)
     {
+        anim = obj.GetComponentInChildren<Animator>();
         anim.SetBool("is_Being_Attacked", true);
 
         anim.SetBool("is_Walking", false);
@@ -71,17 +76,5 @@ public class NPCAnimationController : MonoBehaviour
         anim.SetBool("is_Dying", false);
         anim.SetBool("is_Being_Bitten", false);
     }
-
-    public void walkLeft()
-    {
-        anim.SetBool("isLeft", true);
-
-        anim.SetBool("isIdle", false);
-        anim.SetBool("isAttacking", false);
-        anim.SetBool("isWalking", false);
-        anim.SetBool("isDying", false);
-        anim.SetBool("isFeeding", false);
-        anim.SetBool("isBeingHit", false);
-        anim.SetBool("isRight", false);
-    }
+    
 }

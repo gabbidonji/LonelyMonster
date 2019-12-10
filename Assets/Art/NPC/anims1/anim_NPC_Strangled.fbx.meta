@@ -38,7 +38,7 @@ ModelImporter:
       name: npc_bit
       takeName: mixamo.com
       internalID: 0
-      firstFrame: 0
+      firstFrame: 111
       lastFrame: 257
       wrapMode: 0
       orientationOffsetY: 0

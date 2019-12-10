@@ -11,6 +11,7 @@ public class Enemy1AI : MonoBehaviour, EnemyAI
     private PlayerController player_ctr;
     private Vector3 lastSeenPlayerPos;
 
+    public Light flashlight;
     private EnemyVision vision;
 
     public List<Vector3> positions;
@@ -72,7 +73,7 @@ public class Enemy1AI : MonoBehaviour, EnemyAI
     {
         switch(state){
             case EnemyState.PATROL:
-                anim.walk();
+                anim.walk(gameObject);
                 vision.NotFollowingPlayer();
                 if(vision.SeesPlayer() && !player_ctr.IsFound()){
                     vision.FollowingPlayer();
@@ -96,10 +97,10 @@ public class Enemy1AI : MonoBehaviour, EnemyAI
                 }
                 break;
             case EnemyState.PURSUE:
-                anim.walk();
+                anim.walk(gameObject);
                 switch (attackState){
                     case AttackState.NOT_ATTACKING:
-                        anim.walk();
+                        anim.walk(gameObject);
                         nav.enabled = true;
                         if(vision.SeesPlayer()){
                             nav.destination = player_tr.position;
@@ -128,7 +129,7 @@ public class Enemy1AI : MonoBehaviour, EnemyAI
                         }
                         break;
                     case AttackState.ATTACKING:
-                        anim.punch();
+                        anim.punch(gameObject);
                         if (attackTimer < 0){
                             attackHitbox.SetActive(false);
                             attackTimer = attackPostdelay;
@@ -138,7 +139,7 @@ public class Enemy1AI : MonoBehaviour, EnemyAI
                         }
                         break;
                     case AttackState.POSTDELAY:
-                        anim.walk();
+                        anim.walk(gameObject);
                         if (attackTimer < 0){
                             nav.enabled = true;
                             nav.destination = lastSeenPlayerPos;
@@ -176,7 +177,8 @@ public class Enemy1AI : MonoBehaviour, EnemyAI
                 }
                 break;
             case EnemyState.IMMOBILE:
-                anim.getBitten();
+                anim.getBitten(gameObject);
+                flashlight.gameObject.SetActive(false);
                 break;
             case EnemyState.DEAD:
                 nav.enabled = false;
@@ -262,7 +264,8 @@ public class Enemy1AI : MonoBehaviour, EnemyAI
         hp -= 1;
         if(hp <= 0){
             DestroyEnemy();
-            anim.die();
+            anim.die(gameObject);
+            flashlight.gameObject.SetActive(false);
         }
         //rb.velocity = new Vector3(0,0,0);
         // GetComponent<BoxCollider>().enabled = false;
