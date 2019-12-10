@@ -47,6 +47,7 @@ public class PlayerController : MonoBehaviour
 
     public KeyController key;
     public Text dialogue;
+    public Text gameOverText;
     public AudioClip punchWoosh;
     public AudioClip drinking;
     public AudioSource asource;
@@ -212,6 +213,8 @@ public class PlayerController : MonoBehaviour
             if(hitInvincibilityTimer < 0){
                     if (currentHealth <= 0)
                     {
+                        gameOverText.text = "Hunters killed\nyou";
+                        dialogue.text = "";
                         state = PlayerState.DEAD;
                     } else
                     {
@@ -271,8 +274,6 @@ public class PlayerController : MonoBehaviour
     {
         anim.die();
         GetComponent<Rigidbody>().velocity = new Vector3();
-        Time.timeScale = 0.5f;
-        //yield return new WaitForSeconds(2f);
         GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationY | RigidbodyConstraints.FreezeRotationZ | RigidbodyConstraints.FreezePositionX | RigidbodyConstraints.FreezePositionY | RigidbodyConstraints.FreezePositionZ;
         foreach(BoxCollider bc in GetComponentsInChildren<BoxCollider>()) bc.enabled = false;
         GetComponent<BoxCollider>().enabled = false;
@@ -284,8 +285,9 @@ public class PlayerController : MonoBehaviour
         feedSlider.value = currentFeed;
         if (currentFeed == 0)
         {
-            anim.die();
-            death(); // not working
+            gameOverText.text = "You died of\nthirst";
+            dialogue.text = "";
+            state = PlayerState.DEAD;
         }
     }
 
@@ -295,11 +297,11 @@ public class PlayerController : MonoBehaviour
         {
             if (key.isActiveAndEnabled)
             {
-                dialogue.text = "The gate is unlocked";
+                dialogue.text = "";
             }
             else
             {
-                dialogue.text = "Find the key!";
+                dialogue.text = "find the key and unlock the gate to get to safety";
             }
         }
     }

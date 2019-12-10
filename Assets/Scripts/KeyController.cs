@@ -21,6 +21,6 @@ public class KeyController : MonoBehaviour
     public void showKey()
     {
         gameObject.SetActive(true);
-        dialogue.text = "You have the key!";
+        dialogue.text = "You found the key! Get to the gate";
     }
 }
