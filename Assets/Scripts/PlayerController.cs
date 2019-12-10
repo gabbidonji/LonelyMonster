@@ -48,7 +48,7 @@ public class PlayerController : MonoBehaviour
     public KeyController key;
     public Text dialogue;
     public Text gameOverText;
-    public Image darkness;
+    public Button menu;
     public AudioClip punchWoosh;
     public AudioClip drinking;
     public AudioSource asource;
@@ -92,7 +92,6 @@ public class PlayerController : MonoBehaviour
         oldPositionVert = Input.GetAxis("Vertical");
         InvokeRepeating("hunger", 2.0f, 2f);
         anim = FindObjectOfType<AnimationController>();
-        darkness.enabled = false;
         gameOverText.gameObject.SetActive(true);
     }
 
@@ -280,6 +279,7 @@ public class PlayerController : MonoBehaviour
         GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationY | RigidbodyConstraints.FreezeRotationZ | RigidbodyConstraints.FreezePositionX | RigidbodyConstraints.FreezePositionY | RigidbodyConstraints.FreezePositionZ;
         foreach(BoxCollider bc in GetComponentsInChildren<BoxCollider>()) bc.enabled = false;
         GetComponent<BoxCollider>().enabled = false;
+        menu.gameObject.SetActive(true);
     }
 
     void hunger()
@@ -302,8 +302,7 @@ public class PlayerController : MonoBehaviour
             {
                 gameOverText.text = "Congratulations!\nYou escaped!";
                 dialogue.text = "";
-                gameOverText.color = Color.red;
-                darkness.enabled = true;
+                menu.gameObject.SetActive(true);
                 Time.timeScale = 0;
             }
         }
