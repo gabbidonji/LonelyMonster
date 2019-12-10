@@ -130,7 +130,7 @@ public class PlayerController : MonoBehaviour
                 switch(aState){
                     case AttackState.NOTATTACKING:
                         Vector3 movement = new Vector3(moveVertical, 0.0f, -moveHorizontal);
-                        GetComponent<Rigidbody>().velocity = transform.TransformDirection(movement) * speed;
+                        rb.velocity = transform.TransformDirection(movement) * speed;
                         if (Input.GetKeyDown(KeyCode.Mouse0)) // left click (attack)
                         {
                             isFeeding = false;
@@ -239,7 +239,7 @@ public class PlayerController : MonoBehaviour
             state = PlayerState.HIT;
             decreaseHealth();
             currentHealth = healthSlider.value;
-
+            rb.velocity = new Vector3(0,0,0);
             GetComponent<BoxCollider>().enabled = false;
             mesh.GetComponent<MeshRenderer>().material = foundTex;
             Vector3 forceDir = (transform.position-enemyPos);
