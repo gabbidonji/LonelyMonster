@@ -7,6 +7,5 @@ public class ChangeScene : MonoBehaviour
 {
     public void LoadScene(int sceneNum){
          SceneManager.LoadScene(sceneNum);
-        Debug.Log("change");
     }
 }
