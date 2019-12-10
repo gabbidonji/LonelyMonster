@@ -93,6 +93,7 @@ public class PlayerController : MonoBehaviour
         InvokeRepeating("hunger", 2.0f, 2f);
         anim = FindObjectOfType<AnimationController>();
         darkness.enabled = false;
+        gameOverText.gameObject.SetActive(true);
     }
 
     // Update is called once per frame
