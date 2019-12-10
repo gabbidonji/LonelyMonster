@@ -48,6 +48,7 @@ public class PlayerController : MonoBehaviour
     public KeyController key;
     public Text dialogue;
     public Text gameOverText;
+    public Image darkness;
     public AudioClip punchWoosh;
     public AudioClip drinking;
     public AudioSource asource;
@@ -91,6 +92,7 @@ public class PlayerController : MonoBehaviour
         oldPositionVert = Input.GetAxis("Vertical");
         InvokeRepeating("hunger", 2.0f, 2f);
         anim = FindObjectOfType<AnimationController>();
+        darkness.enabled = false;
     }
 
     // Update is called once per frame
@@ -297,11 +299,11 @@ public class PlayerController : MonoBehaviour
         {
             if (key.isActiveAndEnabled)
             {
+                gameOverText.text = "Congratulations!\nYou escaped!";
                 dialogue.text = "";
-            }
-            else
-            {
-                dialogue.text = "find the key and unlock the gate to get to safety";
+                gameOverText.color = Color.red;
+                darkness.enabled = true;
+                Time.timeScale = 0;
             }
         }
     }
