@@ -36,7 +36,7 @@ public class Enemy1AI : MonoBehaviour, EnemyAI
 
     private AttackState attackState;
 
-    private bool turning;
+    //private bool turning;
 
     public int hp;
     private NPCAnimationController anim;
@@ -61,7 +61,7 @@ public class Enemy1AI : MonoBehaviour, EnemyAI
         checkedRight = false;
         checkedLeft = false;
         checking = false;
-        turning = true;
+        //turning = true;
         anim = GetComponentInChildren<NPCAnimationController>();
     }
 
@@ -75,21 +75,21 @@ public class Enemy1AI : MonoBehaviour, EnemyAI
                     vision.FollowingPlayer();
                     state = EnemyState.PURSUE;
                 } else {
-                    if(!turning){
+                    // if(!turning){
                         nav.enabled = true;
                         if(nav.remainingDistance < 0.001){
-                            turning = true;
+                            // turning = true;
                             targetPosIndex = (targetPosIndex + 1)%positions.Count;
                             nav.destination = positions[targetPosIndex];
                         }
-                    } else {
-                        nav.enabled = false;
-                        if(FaceDirection(positions[targetPosIndex])){
-                            turning = false;
-                            nav.enabled = true;
-                            nav.destination = positions[targetPosIndex];
-                        }
-                    }
+                    // } else {
+                    //     nav.enabled = false;
+                    //     if(FaceDirection(positions[targetPosIndex])){
+                    //         turning = false;
+                    //         nav.enabled = true;
+                    //         nav.destination = positions[targetPosIndex];
+                    //     }
+                    // }
                 }
                 break;
             case EnemyState.PURSUE:
@@ -139,7 +139,7 @@ public class Enemy1AI : MonoBehaviour, EnemyAI
                             if(player_ctr.IsFound()){
                                 targetPosIndex = FindClosestPathPoint();
                                 state = EnemyState.PATROL;
-                                turning = true;
+                                // turning = true;
                             }
                         } else {
                             attackTimer -= Time.deltaTime;
@@ -165,7 +165,7 @@ public class Enemy1AI : MonoBehaviour, EnemyAI
                     vision.NotFollowingPlayer();
                     state = EnemyState.PATROL;
                     nav.destination = positions[targetPosIndex];
-                    turning = false;
+                    //turning = false;
                 }
                 break;
             case EnemyState.IMMOBILE:
