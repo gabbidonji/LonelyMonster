@@ -356,7 +356,12 @@ PrefabInstance:
         type: 3}
       propertyPath: flashlight
       value: 
-      objectReference: {fileID: 1975758990}
+      objectReference: {fileID: 0}
+    - target: {fileID: 6422248141450894672, guid: f0f1919471aca41018e9d09bae750efe,
+        type: 3}
+      propertyPath: key
+      value: 
+      objectReference: {fileID: 621640536}
     - target: {fileID: 9175325893417759422, guid: f0f1919471aca41018e9d09bae750efe,
         type: 3}
       propertyPath: m_RootOrder
@@ -2409,7 +2414,12 @@ PrefabInstance:
         type: 3}
       propertyPath: flashlight
       value: 
-      objectReference: {fileID: 1308895162}
+      objectReference: {fileID: 0}
+    - target: {fileID: 6422248141450894672, guid: f0f1919471aca41018e9d09bae750efe,
+        type: 3}
+      propertyPath: key
+      value: 
+      objectReference: {fileID: 621640536}
     - target: {fileID: 9175325893417759422, guid: f0f1919471aca41018e9d09bae750efe,
         type: 3}
       propertyPath: m_RootOrder
@@ -2821,7 +2831,12 @@ PrefabInstance:
         type: 3}
       propertyPath: flashlight
       value: 
-      objectReference: {fileID: 1765308575}
+      objectReference: {fileID: 0}
+    - target: {fileID: 6422248141450894672, guid: f0f1919471aca41018e9d09bae750efe,
+        type: 3}
+      propertyPath: key
+      value: 
+      objectReference: {fileID: 621640536}
     - target: {fileID: 9175325893417759422, guid: f0f1919471aca41018e9d09bae750efe,
         type: 3}
       propertyPath: m_RootOrder
@@ -6282,12 +6297,6 @@ MonoBehaviour:
   NoiseIntensityOffset: 0.3
   NoiseVelocity: {x: 10, y: 10}
   MaxRayLength: 400
---- !u!108 &866084421 stripped
-Light:
-  m_CorrespondingSourceObject: {fileID: 7329047477307702197, guid: f0f1919471aca41018e9d09bae750efe,
-    type: 3}
-  m_PrefabInstance: {fileID: 2006013693}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &872988531
 GameObject:
   m_ObjectHideFlags: 0
@@ -8004,7 +8013,12 @@ PrefabInstance:
         type: 3}
       propertyPath: flashlight
       value: 
-      objectReference: {fileID: 1286697035}
+      objectReference: {fileID: 0}
+    - target: {fileID: 6422248141450894672, guid: f0f1919471aca41018e9d09bae750efe,
+        type: 3}
+      propertyPath: key
+      value: 
+      objectReference: {fileID: 621640536}
     - target: {fileID: 9175325893417759422, guid: f0f1919471aca41018e9d09bae750efe,
         type: 3}
       propertyPath: m_RootOrder
@@ -8914,12 +8928,6 @@ MonoBehaviour:
   NoiseIntensityOffset: 0.3
   NoiseVelocity: {x: 10, y: 10}
   MaxRayLength: 400
---- !u!108 &1286697035 stripped
-Light:
-  m_CorrespondingSourceObject: {fileID: 7329047477307702197, guid: f0f1919471aca41018e9d09bae750efe,
-    type: 3}
-  m_PrefabInstance: {fileID: 1143742147}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &1288350199 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 3506150401543615792, guid: ba293164aa0de4e6e94de31a555da1d1,
@@ -8964,12 +8972,6 @@ MonoBehaviour:
   NoiseIntensityOffset: 0.3
   NoiseVelocity: {x: 10, y: 10}
   MaxRayLength: 400
---- !u!108 &1308895162 stripped
-Light:
-  m_CorrespondingSourceObject: {fileID: 7329047477307702197, guid: f0f1919471aca41018e9d09bae750efe,
-    type: 3}
-  m_PrefabInstance: {fileID: 402504322}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &1309170512 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8174010022519288266, guid: ba293164aa0de4e6e94de31a555da1d1,
@@ -11200,12 +11202,6 @@ MonoBehaviour:
   NoiseIntensityOffset: 0.3
   NoiseVelocity: {x: 10, y: 10}
   MaxRayLength: 400
---- !u!108 &1765308575 stripped
-Light:
-  m_CorrespondingSourceObject: {fileID: 7329047477307702197, guid: f0f1919471aca41018e9d09bae750efe,
-    type: 3}
-  m_PrefabInstance: {fileID: 435033245}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1800639912
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -11444,7 +11440,12 @@ PrefabInstance:
         type: 3}
       propertyPath: flashlight
       value: 
-      objectReference: {fileID: 2114801635}
+      objectReference: {fileID: 0}
+    - target: {fileID: 6422248141450894672, guid: f0f1919471aca41018e9d09bae750efe,
+        type: 3}
+      propertyPath: key
+      value: 
+      objectReference: {fileID: 621640536}
     - target: {fileID: 9175325893417759422, guid: f0f1919471aca41018e9d09bae750efe,
         type: 3}
       propertyPath: m_RootOrder
@@ -12023,12 +12024,6 @@ MonoBehaviour:
   NoiseIntensityOffset: 0.3
   NoiseVelocity: {x: 10, y: 10}
   MaxRayLength: 400
---- !u!108 &1975758990 stripped
-Light:
-  m_CorrespondingSourceObject: {fileID: 7329047477307702197, guid: f0f1919471aca41018e9d09bae750efe,
-    type: 3}
-  m_PrefabInstance: {fileID: 42534485}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &1990280130 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -9064325173771588411, guid: ba293164aa0de4e6e94de31a555da1d1,
@@ -12235,7 +12230,12 @@ PrefabInstance:
         type: 3}
       propertyPath: flashlight
       value: 
-      objectReference: {fileID: 866084421}
+      objectReference: {fileID: 0}
+    - target: {fileID: 6422248141450894672, guid: f0f1919471aca41018e9d09bae750efe,
+        type: 3}
+      propertyPath: key
+      value: 
+      objectReference: {fileID: 621640536}
     - target: {fileID: 9175325893417759422, guid: f0f1919471aca41018e9d09bae750efe,
         type: 3}
       propertyPath: m_RootOrder
@@ -13321,12 +13321,6 @@ MonoBehaviour:
   NoiseIntensityOffset: 0.3
   NoiseVelocity: {x: 10, y: 10}
   MaxRayLength: 400
---- !u!108 &2114801635 stripped
-Light:
-  m_CorrespondingSourceObject: {fileID: 7329047477307702197, guid: f0f1919471aca41018e9d09bae750efe,
-    type: 3}
-  m_PrefabInstance: {fileID: 1800639912}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &2118410277
 PrefabInstance:
   m_ObjectHideFlags: 0

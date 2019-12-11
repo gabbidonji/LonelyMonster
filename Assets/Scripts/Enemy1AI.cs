@@ -11,6 +11,7 @@ public class Enemy1AI : MonoBehaviour, EnemyAI
     private PlayerController player_ctr;
     private Vector3 lastSeenPlayerPos;
 
+    public KeyController key;
     public Light flashlight;
     private EnemyVision vision;
 
@@ -246,6 +247,10 @@ public class Enemy1AI : MonoBehaviour, EnemyAI
     }
 
     public void DestroyEnemy(){
+        if (gameObject.tag == "EnemyWithKey")
+            {
+                key.showKey();
+            }
         state = EnemyState.DEAD;
         GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationY | RigidbodyConstraints.FreezeRotationZ | RigidbodyConstraints.FreezePositionX | RigidbodyConstraints.FreezePositionY | RigidbodyConstraints.FreezePositionZ;
         GetComponent<BoxCollider>().enabled = false;

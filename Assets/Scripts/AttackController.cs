@@ -7,7 +7,6 @@ public class AttackController : MonoBehaviour
 {
     public AudioClip hit;
     public AudioSource asource;
-    public KeyController key;
     // Start is called before the first frame update
     void Start()
     {
@@ -23,10 +22,6 @@ public class AttackController : MonoBehaviour
     {
         if (c.gameObject.tag == "Enemy" || c.gameObject.tag == "EnemyWithKey")
         {
-            if (c.gameObject.tag == "EnemyWithKey")
-            {
-                key.showKey();
-            }
             asource.PlayOneShot(hit);
             c.gameObject.GetComponent<Enemy1AI>().Hit();
             this.enabled = false;
